@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Menu from "../components/Menu";
 import ProductsSection from "../components/ProductsSection";
 import Footer from "../components/Footer";
 import Searchbar from "../components/Searchbar";
+import { useParams } from "react-router-dom";
 
 const Products = () => {
+  const { search } = useParams();
+
   return (
     <>
       <Menu />
@@ -22,7 +25,11 @@ const Products = () => {
           </div>
         </div>
       </div>
-      <ProductsSection />
+      <ProductsSection
+        numberOfProducts={25}
+        paginationLimit={9}
+        searchTerm={search}
+      />
       <Footer />
     </>
   );

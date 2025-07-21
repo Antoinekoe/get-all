@@ -5,8 +5,12 @@ import Cart from "./Cart";
 const Menu = () => {
   const location = useLocation();
 
-  const isActive = (path) => {
-    return location.pathname === path;
+  // Manage all routes (exact and startswith)
+  const isActive = (path, exact = false) => {
+    if (exact) {
+      return location.pathname === path;
+    }
+    return location.pathname.startsWith(path);
   };
   return (
     <header className="px-4 py-6">
@@ -18,7 +22,7 @@ const Menu = () => {
           <li>
             <Link
               to="/"
-              className={isActive("/") ? "li-item-active" : "li-item"}
+              className={isActive("/", true) ? "li-item-active" : "li-item"}
             >
               Home
             </Link>
@@ -42,7 +46,9 @@ const Menu = () => {
           <li>
             <Link
               to="/contact"
-              className={isActive("/contact") ? "li-item-active" : "li-item"}
+              className={
+                isActive("/contact", true) ? "li-item-active" : "li-item"
+              }
             >
               Contact
             </Link>
