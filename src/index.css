@@ -11,3 +11,18 @@
   padding: 0.7rem 2rem;
   border-radius: 2rem;
 }
+
+body {
+  overflow-y: scroll;
+}
+
+.shadow-uniform {
+  box-shadow: 0 0 9px rgba(0, 0, 0, 0.1);
+}
+
+.form-button {
+  padding: 10px;
+  border: 1px solid rgb(214, 214, 214);
+  color: black;
+  border-radius: 20px;
+}
