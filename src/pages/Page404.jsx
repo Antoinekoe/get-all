@@ -1,7 +1,12 @@
 import React from "react";
+import Menu from "../components/Menu";
 
 const Page404 = () => {
-  return <div>404</div>;
+  return (
+    <>
+      <Menu />
+    </>
+  );
 };
 
 export default Page404;
