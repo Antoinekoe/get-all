@@ -16,7 +16,7 @@ const Menu = () => {
     <header className="px-4 py-6">
       <nav className="flex justify-between items-center ">
         <Link to="/">
-          <img src="../src/assets/logo.png" alt="Logo" />
+          <img src="../../src/assets/logo.png" alt="Logo" />
         </Link>
         <ul className="flex fixed left-1/2 -translate-x-1/2 justify-center items-center gap-10 bg-white shadow-uniform p-5 rounded-4xl">
           <li>

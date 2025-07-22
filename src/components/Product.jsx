@@ -1,6 +1,14 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import ButtonCart from "./ButtonCart";
 
-const Product = ({ images, category, description, price, title }) => {
+const Product = ({ id, images, category, description, price, title }) => {
+  const navigate = useNavigate();
+
+  const handleClick = (id) => {
+    navigate(`/products/details/${id}`);
+  };
+
   return (
     <div className="flex flex-col gap-2 w-3/4">
       <img src={images[0]} alt="Product image" />
@@ -11,9 +19,15 @@ const Product = ({ images, category, description, price, title }) => {
         </span>
       </div>
       <span>{description}</span>
-      <button className="flex bg-[#B6B09F] text-white w-fit rounded-4xl px-3 py-2 hover:cursor-pointer hover:shadow-lg">
-        Add to cart
-      </button>
+      <div className="flex gap-5">
+        <ButtonCart />
+        <button
+          onClick={() => handleClick(id)}
+          className="rounded-4xl px-3 py-2 border-[1.5px] hover:cursor-pointer hover:bg-black hover:text-white"
+        >
+          Product details
+        </button>
+      </div>
     </div>
   );
 };

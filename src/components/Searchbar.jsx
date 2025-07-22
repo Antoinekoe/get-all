@@ -13,7 +13,7 @@ const Searchbar = () => {
   const handleSearch = (e) => {
     e.preventDefault();
     setSearchTerm("");
-    navigate(`/products/${searchTerm}`);
+    navigate(`/products/search/${searchTerm}`);
   };
 
   return (

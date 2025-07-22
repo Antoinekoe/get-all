@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Menu from "../components/Menu";
 import ProductsSection from "../components/ProductsSection";
 import Footer from "../components/Footer";

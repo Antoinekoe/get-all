@@ -29,6 +29,7 @@ const ProductsSection = ({
       {products.map((product, index) => (
         <Product
           key={index}
+          id={product.id}
           category={product.category}
           description={product.description}
           price={product.price}
