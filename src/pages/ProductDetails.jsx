@@ -2,65 +2,82 @@ import React, { useEffect, useState } from "react";
 import Menu from "../components/Menu";
 import ButtonCart from "../components/ButtonCart";
 import Footer from "../components/Footer";
-import { Star } from "lucide-react";
 import { getProductsWithId } from "../services/DummyAPI";
 import { useParams } from "react-router-dom";
+import Review from "../components/Review";
+import Rating from "../components/Rating";
 
 const ProductDetails = () => {
-  const params = useParams();
-  const [productSelected, setProductSelected] = useState({});
+  const params = useParams(); // Get product ID from URL
+  const [productSelected, setProductSelected] = useState({}); // Product data
+  const [imageSelected, setImageSelected] = useState(0); // Selected image
 
+  // Fetch product data when ID changes
   useEffect(() => {
-    console.log("Params ID :", params.id);
     getProductsWithId(params.id).then((data) => setProductSelected(data));
   }, [params.id]);
+
+  const handleMouseOver = (index) => {
+    setImageSelected(index);
+  };
 
   return (
     <>
       <Menu />
+      {/* Main container */}
       <div className="flex flex-col w-1/2 mx-auto justify-center my-40 gap-5">
         <div className="flex h-[30rem]">
+          {/* Thumbnail images */}
           <div className=" flex flex-col">
             {productSelected?.images?.map((image, index) => (
-              <img key={index} src={image} alt="" className="w-[10rem]" />
+              <img
+                key={index}
+                src={image}
+                onMouseOver={() => handleMouseOver(index)}
+                alt="Photo du produit"
+                className="w-[10rem] hover:cursor-pointer hover:border-2"
+              />
             ))}
           </div>
+          {/* Main product image */}
           <img
-            src="https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/1.webp"
-            alt=""
+            src={productSelected.images?.[imageSelected]}
+            alt="Photo du produit"
             className="w-[40rem] object-contain"
           />
+          {/* Product info */}
           <div className="flex flex-col w-full gap-5">
-            <h2 className="font-bold text-4xl">Title of the product</h2>
+            <h2 className="font-bold text-4xl">{productSelected.title}</h2>
             <div className="flex">
               <span className="text-2xl">
-                <span className="font-bold">Price</span> - Category
+                <span className="font-bold">{productSelected.price} €</span> -{" "}
+                {productSelected.category}
               </span>
             </div>
-            <span>Description</span>
+            <span>{productSelected.description}</span>
+            {/* Rating display */}
             <div className="flex">
-              <Star fill="#FACF19" stroke="#FACF19" />
-              <Star fill="white" stroke="#FACF19" />
+              {productSelected?.rating ? (
+                <Rating rating={productSelected.rating} />
+              ) : (
+                <span className="text-gray-500">No reviews</span>
+              )}
             </div>
             <span>
-              <span className="text-2xl font-medium">4.15</span> global review
-              note
+              <span className="text-2xl font-medium">
+                {productSelected.rating}
+              </span>{" "}
+              global review note
             </span>
             <ButtonCart />
           </div>
         </div>
-        <div className="border-b-[1px] border-b-gray-300 flex flex-col gap-5 pb-10">
+        {/* Customer reviews */}
+        <div className="flex flex-col gap-5 pb-10">
           <h3 className="font-medium text-3xl">Customers comments</h3>
-          <div className="flex">
-            <span>
-              <span className="font-bold">Name of the user</span> - Date
-            </span>
-          </div>
-          <div className="flex">
-            <Star fill="#FACF19" stroke="#FACF19" />
-            <Star fill="white" stroke="#FACF19" />
-          </div>
-          <span>Comment text</span>
+          {productSelected?.reviews?.map((review, index) => (
+            <Review key={index} review={review} />
+          ))}
         </div>
       </div>
       <Footer />

@@ -7,6 +7,7 @@ const Product = ({ id, images, category, description, price, title }) => {
 
   const handleClick = (id) => {
     navigate(`/products/details/${id}`);
+    window.scrollTo(0, 0);
   };
 
   return (

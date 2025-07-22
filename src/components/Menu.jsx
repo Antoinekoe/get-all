@@ -54,7 +54,7 @@ const Menu = () => {
             </Link>
           </li>
         </ul>
-        <div className="justify-end">
+        <div className="justify-end fixed">
           <Cart />
         </div>
       </nav>
