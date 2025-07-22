@@ -11,7 +11,7 @@ const Product = ({ id, images, category, description, price, title }) => {
   };
 
   return (
-    <div className="flex flex-col gap-2 w-3/4">
+    <div className="flex flex-col gap-2 w-3/4 pb-6">
       <img src={images[0]} alt="Product image" />
       <h3 className="text-5xl">{title}</h3>
       <div className="flex">

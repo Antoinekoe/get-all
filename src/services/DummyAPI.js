@@ -38,9 +38,19 @@ export const getProductsWithSearch = async (
 };
 
 export const getProductsWithId = async (id) => {
-  console.log("Getproducts hitted, ID :", id);
   try {
     const result = await axios.get(`https://dummyjson.com/products/${id}`);
+    return result.data;
+  } catch (error) {
+    console.log("Error in getting products ", error);
+  }
+};
+
+export const getProductsSuggestions = async (searchTerm) => {
+  try {
+    const result = await axios.get(
+      `https://dummyjson.com/products/search?q=${searchTerm}&limit=4&select=title,id`
+    );
     return result.data;
   } catch (error) {
     console.log("Error in getting products ", error);

@@ -9,6 +9,7 @@ const ProductsSection = ({
   searchTerm,
 }) => {
   const [products, setProducts] = useState([]);
+  const [isProducts, setIsProducts] = useState(false);
 
   useEffect(() => {
     if (!searchTerm) {
@@ -24,21 +25,34 @@ const ProductsSection = ({
     }
   }, [numberOfProducts, paginationLimit, searchTerm]);
 
+  useEffect(() => {
+    {
+      products.length === 0 ? setIsProducts(false) : setIsProducts(true);
+    }
+  }, [products.length]);
+
   return (
-    <div className="grid grid-cols-3 items-center justify-items-center w-5/6 m-auto">
-      {products.map((product, index) => (
-        <Product
-          key={index}
-          id={product.id}
-          category={product.category}
-          description={product.description}
-          price={product.price}
-          title={product.title}
-          images={product.images}
-        />
-      ))}
-    </div>
+    <>
+      {isProducts ? (
+        <div className="grid grid-cols-3 items-center justify-items-center w-5/6 m-auto">
+          {products.map((product, index) => (
+            <Product
+              key={index}
+              id={product.id}
+              category={product.category}
+              description={product.description}
+              price={product.price}
+              title={product.title}
+              images={product.images}
+            />
+          ))}
+        </div>
+      ) : (
+        <div className="flex justify-center items-center text-4xl font-bold">
+          Sorry, there are no products matching your criterias.
+        </div>
+      )}
+    </>
   );
 };
-
 export default ProductsSection;
