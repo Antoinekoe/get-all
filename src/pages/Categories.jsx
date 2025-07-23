@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import Menu from "../components/Menu";
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
-import { getAllCategories, fetchCategoryImages } from "../services/DummyAPI";
+import { getAllCategories, getCategoryImages } from "../services/DummyAPI";
+import CategoryGrid from "../components/CategoryGrid";
+import { capitalizeAndDeleteDash } from "../utils/stringUtils.jsx";
 
 const Categories = () => {
   const [allCategories, setAllCategories] = useState([]);
@@ -18,135 +20,12 @@ const Categories = () => {
   useEffect(() => {
     if (allCategories.length > 0) {
       setIsLoading(true);
-      fetchCategoryImages(allCategories).then((data) => {
+      getCategoryImages(allCategories).then((data) => {
         setCategoryImage(data);
         setIsLoading(false);
       });
     }
   }, [allCategories]);
-
-  const capitalizeAndDeleteDash = (string) => {
-    let newString = string.charAt(0).toUpperCase() + string.slice(1);
-    newString = newString.replace(/-/g, " ");
-    return newString;
-  };
-
-  const renderFirstGrid = (categories) => (
-    <div className="grid grid-cols-3 grid-rows-2 gap-10 w-1/2 mx-auto mb-10">
-      <div
-        className="flex justify-center items-center col-span-2 h-80 bg-contain bg-no-repeat bg-center"
-        style={
-          isLoading === false
-            ? { backgroundImage: `url(${categoryImage[categories[0]]})` }
-            : {
-                backgroundImage: "url(./src/assets/loading.gif)",
-                backgroundSize: "100px",
-              }
-        }
-      >
-        <Link
-          to={`/products/category/${categories[0]}`}
-          className="flex justify-center items-center text-white text-6xl h-full w-full bg-black/30 hover:bg-black/80 hover:text-[4rem] transition-all duration-300"
-        >
-          {capitalizeAndDeleteDash(categories[0])}
-        </Link>
-      </div>
-      <div
-        className="flex justify-center items-center text-center row-span-2 bg-contain bg-no-repeat bg-center"
-        style={
-          isLoading === false
-            ? { backgroundImage: `url(${categoryImage[categories[1]]})` }
-            : {
-                backgroundImage: "url(./src/assets/loading.gif)",
-                backgroundSize: "100px",
-              }
-        }
-      >
-        <Link
-          to={`/products/category/${categories[1]}`}
-          className="flex justify-center items-center text-white text-6xl h-full w-full bg-black/30 hover:bg-black/80 hover:text-[4rem] transition-all duration-300"
-        >
-          {capitalizeAndDeleteDash(categories[1])}
-        </Link>
-      </div>
-      <div
-        className="flex justify-center items-center col-span-2 bg-contain bg-no-repeat bg-center"
-        style={
-          isLoading === false
-            ? { backgroundImage: `url(${categoryImage[categories[2]]})` }
-            : {
-                backgroundImage: "url(./src/assets/loading.gif)",
-                backgroundSize: "100px",
-              }
-        }
-      >
-        <Link
-          to={`/products/category/${categories[2]}`}
-          className="flex justify-center items-center text-white text-6xl h-full w-full bg-black/30 hover:bg-black/80 hover:text-[4rem] transition-all duration-300"
-        >
-          {capitalizeAndDeleteDash(categories[2])}
-        </Link>
-      </div>
-    </div>
-  );
-  const renderSecondGrid = (categories) => (
-    <div className="grid grid-cols-3 grid-rows-2 gap-10 w-1/2 mx-auto mb-10">
-      <div
-        className="flex justify-center items-center row-span-2 bg-contain bg-no-repeat bg-center"
-        style={
-          isLoading === false
-            ? { backgroundImage: `url(${categoryImage[categories[0]]})` }
-            : {
-                backgroundImage: "url(./src/assets/loading.gif)",
-                backgroundSize: "100px",
-              }
-        }
-      >
-        <Link
-          to={`/products/category/${categories[0]}`}
-          className="flex justify-center items-center text-center text-white text-6xl h-full w-full bg-black/30 hover:bg-black/80 hover:text-[4rem] transition-all duration-300"
-        >
-          {capitalizeAndDeleteDash(categories[0])}
-        </Link>
-      </div>
-      <div
-        className="flex justify-center items-center col-span-2 h-80 bg-contain bg-no-repeat bg-center"
-        style={
-          isLoading === false
-            ? { backgroundImage: `url(${categoryImage[categories[1]]})` }
-            : {
-                backgroundImage: "url(./src/assets/loading.gif)",
-                backgroundSize: "100px",
-              }
-        }
-      >
-        <Link
-          to={`/products/category/${categories[1]}`}
-          className="flex justify-center items-center text-white text-6xl h-full w-full bg-black/30 hover:bg-black/80 hover:text-[4rem] transition-all duration-300"
-        >
-          {capitalizeAndDeleteDash(categories[1])}
-        </Link>
-      </div>
-      <div
-        className="flex justify-center items-center col-span-2 bg-contain bg-no-repeat bg-center"
-        style={
-          isLoading === false
-            ? { backgroundImage: `url(${categoryImage[categories[2]]})` }
-            : {
-                backgroundImage: "url(./src/assets/loading.gif)",
-                backgroundSize: "100px",
-              }
-        }
-      >
-        <Link
-          to={`/products/category/${categories[2]}`}
-          className="flex justify-center items-center text-white text-6xl h-full w-full bg-black/30 hover:bg-black/80 hover:text-[4rem] transition-all duration-300"
-        >
-          {capitalizeAndDeleteDash(categories[2])}
-        </Link>
-      </div>
-    </div>
-  );
 
   const renderAllGrids = () => {
     const grids = [];
@@ -158,7 +37,15 @@ const Categories = () => {
           categoryIndex,
           categoryIndex + 3
         );
-        grids.push(renderFirstGrid(newCategories));
+        grids.push(
+          <CategoryGrid
+            key={`first-${categoryIndex}`}
+            categories={newCategories}
+            categoryImage={categoryImage}
+            isLoading={isLoading}
+            isFirstLayout={true}
+          />
+        );
         categoryIndex += 3;
       }
       if (categoryIndex < allCategories.length) {
@@ -166,7 +53,15 @@ const Categories = () => {
           categoryIndex,
           categoryIndex + 3
         );
-        grids.push(renderSecondGrid(newCategories));
+        grids.push(
+          <CategoryGrid
+            key={`second-${categoryIndex}`}
+            categories={newCategories}
+            categoryImage={categoryImage}
+            isLoading={isLoading}
+            isFirstLayout={false}
+          />
+        );
         categoryIndex += 3;
       }
     }
@@ -180,7 +75,6 @@ const Categories = () => {
         <h1 className="font-medium text-6xl text-center my-15">
           Choose your category
         </h1>
-
         {renderAllGrids()}
       </div>
       <Footer />

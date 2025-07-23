@@ -79,7 +79,7 @@ export const getProductsByCategory = async (category) => {
   }
 };
 
-export const fetchCategoryImages = async (allCategories) => {
+export const getCategoryImages = async (allCategories) => {
   const images = {};
   for (const category of allCategories) {
     try {

@@ -67,6 +67,12 @@ const ProductsSection = ({
   const isFirstPage = currentPage === 1;
   const isLastPage = currentPage >= totalPages;
 
+  const capitalizeAndDeleteDash = (string) => {
+    let newString = string.charAt(0).toUpperCase() + string.slice(1);
+    newString = newString.replace(/-/g, " ");
+    return newString;
+  };
+
   return (
     <>
       {products.length > 0 ? (
@@ -76,7 +82,7 @@ const ProductsSection = ({
               <Product
                 key={index}
                 id={product.id}
-                category={product.category}
+                category={capitalizeAndDeleteDash(product.category)}
                 description={product.description}
                 price={product.price}
                 title={product.title}
