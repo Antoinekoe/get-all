@@ -79,15 +79,6 @@ export const getProductsByCategory = async (category) => {
   }
 };
 
-export const getCategoryImage = async () => {
-  try {
-    const result = await axios.get(`https://dummyjson.com/products/category/`);
-    return result.data;
-  } catch (error) {
-    console.log("Error in getting products ", error);
-  }
-};
-
 export const fetchCategoryImages = async (allCategories) => {
   const images = {};
   for (const category of allCategories) {

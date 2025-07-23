@@ -2,15 +2,12 @@ import React, { useEffect, useState } from "react";
 import Menu from "../components/Menu";
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
-import {
-  getAllCategories,
-  getCategoryImage,
-  fetchCategoryImages,
-} from "../services/DummyAPI";
+import { getAllCategories, fetchCategoryImages } from "../services/DummyAPI";
 
 const Categories = () => {
   const [allCategories, setAllCategories] = useState([]);
   const [categoryImage, setCategoryImage] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     getAllCategories().then((data) => {
@@ -20,8 +17,11 @@ const Categories = () => {
 
   useEffect(() => {
     if (allCategories.length > 0) {
-      console.log(allCategories);
-      fetchCategoryImages(allCategories).then((data) => setCategoryImage(data));
+      setIsLoading(true);
+      fetchCategoryImages(allCategories).then((data) => {
+        setCategoryImage(data);
+        setIsLoading(false);
+      });
     }
   }, [allCategories]);
 
@@ -35,7 +35,14 @@ const Categories = () => {
     <div className="grid grid-cols-3 grid-rows-2 gap-10 w-1/2 mx-auto mb-10">
       <div
         className="flex justify-center items-center col-span-2 h-80 bg-contain bg-no-repeat bg-center"
-        style={{ backgroundImage: `url(${categoryImage[categories[0]]})` }}
+        style={
+          isLoading === false
+            ? { backgroundImage: `url(${categoryImage[categories[0]]})` }
+            : {
+                backgroundImage: "url(./src/assets/loading.gif)",
+                backgroundSize: "100px",
+              }
+        }
       >
         <Link
           to={`/products/category/${categories[0]}`}
@@ -46,7 +53,14 @@ const Categories = () => {
       </div>
       <div
         className="flex justify-center items-center text-center row-span-2 bg-contain bg-no-repeat bg-center"
-        style={{ backgroundImage: `url(${categoryImage[categories[1]]})` }}
+        style={
+          isLoading === false
+            ? { backgroundImage: `url(${categoryImage[categories[1]]})` }
+            : {
+                backgroundImage: "url(./src/assets/loading.gif)",
+                backgroundSize: "100px",
+              }
+        }
       >
         <Link
           to={`/products/category/${categories[1]}`}
@@ -57,7 +71,14 @@ const Categories = () => {
       </div>
       <div
         className="flex justify-center items-center col-span-2 bg-contain bg-no-repeat bg-center"
-        style={{ backgroundImage: `url(${categoryImage[categories[2]]})` }}
+        style={
+          isLoading === false
+            ? { backgroundImage: `url(${categoryImage[categories[2]]})` }
+            : {
+                backgroundImage: "url(./src/assets/loading.gif)",
+                backgroundSize: "100px",
+              }
+        }
       >
         <Link
           to={`/products/category/${categories[2]}`}
@@ -72,7 +93,14 @@ const Categories = () => {
     <div className="grid grid-cols-3 grid-rows-2 gap-10 w-1/2 mx-auto mb-10">
       <div
         className="flex justify-center items-center row-span-2 bg-contain bg-no-repeat bg-center"
-        style={{ backgroundImage: `url(${categoryImage[categories[0]]})` }}
+        style={
+          isLoading === false
+            ? { backgroundImage: `url(${categoryImage[categories[0]]})` }
+            : {
+                backgroundImage: "url(./src/assets/loading.gif)",
+                backgroundSize: "100px",
+              }
+        }
       >
         <Link
           to={`/products/category/${categories[0]}`}
@@ -83,7 +111,14 @@ const Categories = () => {
       </div>
       <div
         className="flex justify-center items-center col-span-2 h-80 bg-contain bg-no-repeat bg-center"
-        style={{ backgroundImage: `url(${categoryImage[categories[1]]})` }}
+        style={
+          isLoading === false
+            ? { backgroundImage: `url(${categoryImage[categories[1]]})` }
+            : {
+                backgroundImage: "url(./src/assets/loading.gif)",
+                backgroundSize: "100px",
+              }
+        }
       >
         <Link
           to={`/products/category/${categories[1]}`}
@@ -94,7 +129,14 @@ const Categories = () => {
       </div>
       <div
         className="flex justify-center items-center col-span-2 bg-contain bg-no-repeat bg-center"
-        style={{ backgroundImage: `url(${categoryImage[categories[2]]})` }}
+        style={
+          isLoading === false
+            ? { backgroundImage: `url(${categoryImage[categories[2]]})` }
+            : {
+                backgroundImage: "url(./src/assets/loading.gif)",
+                backgroundSize: "100px",
+              }
+        }
       >
         <Link
           to={`/products/category/${categories[2]}`}
