@@ -1,13 +1,15 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Product from "./Product";
 import { getProducts } from "../services/DummyAPI";
 import { getProductsWithSearch } from "../services/DummyAPI";
 import Pagination from "./Pagination";
+import { getProductsByCategory } from "../services/DummyAPI";
 
 const ProductsSection = ({
   numberOfProducts,
   paginationLimit = 0,
   searchTerm,
+  categoryTerm,
 }) => {
   const [products, setProducts] = useState([]);
   const [productsInActualPage, setProductsInActualPage] = useState([]);
@@ -38,12 +40,13 @@ const ProductsSection = ({
   };
 
   useEffect(() => {
-    if (!searchTerm) {
+    if (!searchTerm && !categoryTerm) {
       getProducts(numberOfProducts, paginationLimit).then((data) => {
         setProducts(data);
         setCurrentPage(1);
       });
-    } else {
+    }
+    if (searchTerm && !categoryTerm) {
       getProductsWithSearch(numberOfProducts, paginationLimit, searchTerm).then(
         (data) => {
           setProducts(data);
@@ -51,7 +54,13 @@ const ProductsSection = ({
         }
       );
     }
-  }, [numberOfProducts, paginationLimit, searchTerm]);
+    if (!searchTerm && categoryTerm) {
+      getProductsByCategory(categoryTerm).then((data) => {
+        setProducts(data.products);
+        setCurrentPage(1);
+      });
+    }
+  }, [numberOfProducts, paginationLimit, searchTerm, categoryTerm]);
 
   const totalPages =
     paginationLimit > 0 ? Math.ceil(products.length / paginationLimit) : 1;

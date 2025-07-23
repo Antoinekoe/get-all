@@ -67,3 +67,41 @@ export const getAllCategories = async () => {
     console.log("Error in getting products ", error);
   }
 };
+
+export const getProductsByCategory = async (category) => {
+  try {
+    const result = await axios.get(
+      `https://dummyjson.com/products/category/${category}`
+    );
+    return result.data;
+  } catch (error) {
+    console.log("Error in getting products ", error);
+  }
+};
+
+export const getCategoryImage = async () => {
+  try {
+    const result = await axios.get(`https://dummyjson.com/products/category/`);
+    return result.data;
+  } catch (error) {
+    console.log("Error in getting products ", error);
+  }
+};
+
+export const fetchCategoryImages = async (allCategories) => {
+  const images = {};
+  for (const category of allCategories) {
+    try {
+      const response = await fetch(
+        `https://dummyjson.com/products/category/${category}?limit=1`
+      );
+      const data = await response.json();
+      if (data.products && data.products[0]) {
+        images[category] = data.products[0].thumbnail.replace(/["'"]/g, "%27");
+      }
+    } catch (error) {
+      console.error(`Error fetching image for ${category}:`, error);
+    }
+  }
+  return images;
+};

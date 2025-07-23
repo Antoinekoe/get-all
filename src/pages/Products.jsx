@@ -6,7 +6,7 @@ import Searchbar from "../components/Searchbar";
 import { useParams } from "react-router-dom";
 
 const Products = () => {
-  const { search } = useParams();
+  const { search, category } = useParams();
 
   return (
     <>
@@ -29,6 +29,7 @@ const Products = () => {
         numberOfProducts={25}
         paginationLimit={9}
         searchTerm={search}
+        categoryTerm={category}
       />
       <Footer />
     </>
