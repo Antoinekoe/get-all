@@ -22,7 +22,7 @@ const CategoryCard = ({
     >
       <Link
         to={`/products/category/${category}`}
-        className="flex justify-center items-center text-white text-6xl h-full w-full bg-black/30 hover:bg-black/80 hover:text-[4rem] transition-all duration-300"
+        className="flex justify-center items-center text-white text-[2.75rem] h-full w-full p-4 bg-gray-700/30 hover:bg-black/80 hover:text-[3rem] transition-all duration-300"
       >
         {capitalizeAndDeleteDash(category)}
       </Link>

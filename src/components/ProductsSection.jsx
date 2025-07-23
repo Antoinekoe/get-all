@@ -4,6 +4,7 @@ import { getProducts } from "../services/DummyAPI";
 import { getProductsWithSearch } from "../services/DummyAPI";
 import Pagination from "./Pagination";
 import { getProductsByCategory } from "../services/DummyAPI";
+import { capitalizeAndDeleteDash } from "../utils/stringUtils";
 
 const ProductsSection = ({
   numberOfProducts,
@@ -11,10 +12,17 @@ const ProductsSection = ({
   searchTerm,
   categoryTerm,
 }) => {
+  // State for products and pagination
   const [products, setProducts] = useState([]);
   const [productsInActualPage, setProductsInActualPage] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  // Calculate pagination info
+  const totalPages =
+    paginationLimit > 0 ? Math.ceil(products.length / paginationLimit) : 1;
+  const isFirstPage = currentPage === 1;
+  const isLastPage = currentPage >= totalPages;
 
+  // Handle pagination - slice products for current page
   useEffect(() => {
     if (paginationLimit > 0) {
       const startIndex = (currentPage - 1) * paginationLimit;
@@ -26,6 +34,7 @@ const ProductsSection = ({
     }
   }, [currentPage, products, paginationLimit]);
 
+  // Navigation between pages with smooth scroll to top
   const changePage = (operator) => {
     switch (operator) {
       case "+":
@@ -39,14 +48,17 @@ const ProductsSection = ({
     }
   };
 
+  // Fetch products based on search/category filters
   useEffect(() => {
     if (!searchTerm && !categoryTerm) {
+      // Load all products
       getProducts(numberOfProducts, paginationLimit).then((data) => {
         setProducts(data);
         setCurrentPage(1);
       });
     }
     if (searchTerm && !categoryTerm) {
+      // Search products by term
       getProductsWithSearch(numberOfProducts, paginationLimit, searchTerm).then(
         (data) => {
           setProducts(data);
@@ -55,6 +67,7 @@ const ProductsSection = ({
       );
     }
     if (!searchTerm && categoryTerm) {
+      // Filter products by category
       getProductsByCategory(categoryTerm).then((data) => {
         setProducts(data.products);
         setCurrentPage(1);
@@ -62,21 +75,11 @@ const ProductsSection = ({
     }
   }, [numberOfProducts, paginationLimit, searchTerm, categoryTerm]);
 
-  const totalPages =
-    paginationLimit > 0 ? Math.ceil(products.length / paginationLimit) : 1;
-  const isFirstPage = currentPage === 1;
-  const isLastPage = currentPage >= totalPages;
-
-  const capitalizeAndDeleteDash = (string) => {
-    let newString = string.charAt(0).toUpperCase() + string.slice(1);
-    newString = newString.replace(/-/g, " ");
-    return newString;
-  };
-
   return (
     <>
       {products.length > 0 ? (
         <>
+          {/* Product grid display */}
           <div className="grid grid-cols-3 items-center justify-items-center w-5/6 m-auto">
             {productsInActualPage.map((product, index) => (
               <Product
@@ -90,6 +93,8 @@ const ProductsSection = ({
               />
             ))}
           </div>
+
+          {/* Pagination controls */}
           <div>
             <Pagination
               changePage={changePage}

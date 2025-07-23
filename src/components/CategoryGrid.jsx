@@ -8,9 +8,10 @@ const CategoryGrid = ({
   isLoading,
   isFirstLayout = true,
 }) => {
+  // First layout: large horizontal card, tall vertical card, large horizontal card
   if (isFirstLayout) {
     return (
-      <div className="grid grid-cols-3 grid-rows-2 gap-10 w-1/2 mx-auto mb-10">
+      <div className="grid grid-cols-3 grid-rows-2 gap-10 w-1/2 mx-auto mb-10 text-center">
         <CategoryCard
           category={categories[0]}
           categoryImage={categoryImage}
@@ -36,8 +37,9 @@ const CategoryGrid = ({
     );
   }
 
+  // Second layout: tall vertical card, large horizontal card, large horizontal card
   return (
-    <div className="grid grid-cols-3 grid-rows-2 gap-10 w-1/2 mx-auto mb-10">
+    <div className="grid grid-cols-3 grid-rows-2 gap-10 w-1/2 mx-auto mb-10 text-center">
       <CategoryCard
         category={categories[0]}
         categoryImage={categoryImage}
