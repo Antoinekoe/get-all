@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Menu from "../components/Menu";
 import ProductsSection from "../components/ProductsSection";
 import Footer from "../components/Footer";
 import Searchbar from "../components/Searchbar";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useCategories } from "../hooks/useCategories";
 import { capitalizeAndDeleteDash } from "../utils/stringUtils";
 import Select from "react-select";
@@ -11,10 +11,16 @@ import Select from "react-select";
 const Products = () => {
   const { search, category } = useParams();
   const { allCategories } = useCategories();
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const navigate = useNavigate();
 
   const handleChange = (selectedOption) => {
-    console.log(selectedOption);
+    setSelectedCategory(selectedOption.value);
   };
+
+  useEffect(() => {
+    navigate(`/products/category/${selectedCategory}`);
+  }, [selectedCategory]);
 
   const options = [
     { value: "", label: "Filter by category" },
@@ -47,10 +53,20 @@ const Products = () => {
                 }),
                 option: (provided, state) => ({
                   ...provided,
-                  backgroundColor: state.isFocused ? "#B6B09F" : "white",
-                  color: state.isFocused ? "black" : "black",
-                  cusor: "pointer",
+                  backgroundColor: state.isSelected
+                    ? "#B6B09F"
+                    : state.isFocused
+                    ? "#B6B09F"
+                    : "white",
+                  color: state.isSelected
+                    ? "black"
+                    : state.isFocused
+                    ? "#your-focus-text-color"
+                    : "#374151",
+                  padding: "12px 16px",
+                  cursor: "pointer",
                   "&:hover": {
+                    backgroundColor: "#B6B09F",
                     cursor: "pointer",
                   },
                 }),
