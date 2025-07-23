@@ -56,3 +56,14 @@ export const getProductsSuggestions = async (searchTerm) => {
     console.log("Error in getting products ", error);
   }
 };
+
+export const getAllCategories = async () => {
+  try {
+    const result = await axios.get(
+      `https://dummyjson.com/products/category-list`
+    );
+    return result.data;
+  } catch (error) {
+    console.log("Error in getting products ", error);
+  }
+};
