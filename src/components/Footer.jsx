@@ -8,7 +8,7 @@ const Footer = () => {
         className="flex justify-center items-center gap-1 bg-[#EAE4D5] w-full text-center py-10 text-2xl cursor-pointer"
         onClick={() => window.scroll({ top: 0, behavior: "smooth" })}
       >
-        <ArrowUp /> Go up <ArrowUp />
+        Go up
       </div>
       <div className="flex flex-col gap-30 bg-[#B6B09F] w-full justify-center items-center py-10">
         <div className="flex text-white gap-30">
