@@ -1,16 +1,17 @@
 import { Search } from "lucide-react";
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { getProductsSuggestions } from "../services/DummyAPI";
-import ProductsSuggested from "./ProductsSuggested";
+import { getProductsSuggestions } from "../../services/DummyAPI";
+import SearchSuggestions from "../products/SearchSuggestions";
 
+// Search component with product suggestions
 const Searchbar = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [productsSuggested, setProductsSuggested] = useState([]);
   const searchbarRef = useRef(null);
   const navigate = useNavigate();
 
-  // Check if a click has been made outside of the searchbar, if yes delete suggested products
+  // Close suggestions when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -29,7 +30,7 @@ const Searchbar = () => {
     };
   }, [productsSuggested.length]);
 
-  // If value entered > 4, get suggested products
+  // Get product suggestions after 4+ characters
   const handleChange = (e) => {
     setSearchTerm(e.target.value);
     setTimeout(() => {
@@ -51,6 +52,7 @@ const Searchbar = () => {
     setSearchTerm("");
   };
 
+  // Navigate to search results
   const handleSearch = (e) => {
     e.preventDefault();
     navigate(`/products/search/${searchTerm}`);
@@ -74,7 +76,7 @@ const Searchbar = () => {
         <Search className="cursor-pointer" onClick={handleSearch} />
       </form>
       {productsSuggested.length > 0 && (
-        <ProductsSuggested
+        <SearchSuggestions
           productsSuggested={productsSuggested}
           resetProductsSuggested={resetProductsSuggested}
           resetSearchTerm={resetSearchTerm}

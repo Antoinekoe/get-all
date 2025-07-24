@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useCart } from "../hooks/useCart";
-import Footer from "../components/Footer";
-import Menu from "../components/Menu";
+import Footer from "../components/Layout/Footer";
+import Menu from "../components/Layout/Menu";
 import { useGroupedProducts } from "../hooks/useGroupedProducts";
 import { useTotalPrice } from "../hooks/useTotalPrice";
 import { useDeleteSingleProduct } from "../hooks/useDeleteSingleProduct";

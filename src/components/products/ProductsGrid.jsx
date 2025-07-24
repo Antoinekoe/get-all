@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Product from "./Product";
-import { getProducts } from "../services/DummyAPI";
-import { getProductsWithSearch } from "../services/DummyAPI";
-import Pagination from "./Pagination";
-import { getProductsByCategory } from "../services/DummyAPI";
-import { capitalizeAndDeleteDash } from "../utils/stringUtils";
+import { getProducts } from "../../services/DummyAPI";
+import { getProductsWithSearch } from "../../services/DummyAPI";
+import Pagination from "../ui/Pagination";
+import { getProductsByCategory } from "../../services/DummyAPI";
+import { capitalizeAndDeleteDash } from "../../utils/stringUtils";
 
-const ProductsSection = ({
+// Products display section with pagination and filtering
+const ProductsGrid = ({
   numberOfProducts,
   paginationLimit = 0,
   searchTerm,
@@ -115,4 +116,4 @@ const ProductsSection = ({
     </>
   );
 };
-export default ProductsSection;
+export default ProductsGrid;

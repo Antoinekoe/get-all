@@ -4,6 +4,7 @@ import React from "react";
 const Footer = () => {
   return (
     <footer className="flex flex-col justify-center items-center mt-20 mb-0">
+      {/* Scroll to top button */}
       <div
         className="flex justify-center items-center gap-1 bg-[#EAE4D5] w-full text-center py-10 text-2xl cursor-pointer"
         onClick={() => window.scroll({ top: 0, behavior: "smooth" })}

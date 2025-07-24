@@ -1,6 +1,6 @@
 import React from "react";
 import CategoryCard from "./CategoryCard";
-import { capitalizeAndDeleteDash } from "../utils/stringUtils";
+import { capitalizeAndDeleteDash } from "../../utils/stringUtils";
 
 const CategoryGrid = ({
   categories,

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import Menu from "../components/Menu";
-import ButtonCart from "../components/ButtonCart";
-import Footer from "../components/Footer";
+import Menu from "../components/Layout/Menu";
+import AddToCartButton from "../components/ui/AddToCartButton";
+import Footer from "../components/Layout/Footer";
 import { getProductsWithId } from "../services/DummyAPI";
 import { useParams } from "react-router-dom";
-import Review from "../components/Review";
-import Rating from "../components/Rating";
+import Review from "../components/products/Review";
+import Rating from "../components/ui/Rating";
 
 const ProductDetails = () => {
   const params = useParams(); // Get product ID from URL
@@ -79,7 +79,7 @@ const ProductDetails = () => {
               global review note
             </span>
             <div className="flex justify-center lg:justify-start">
-              <ButtonCart
+              <AddToCartButton
                 id={productSelected.id}
                 images={productSelected.images}
                 price={productSelected.price}

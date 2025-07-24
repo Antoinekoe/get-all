@@ -1,10 +1,11 @@
 import React from "react";
-import Hero from "../components/Hero";
-import ProductsSection from "../components/ProductsSection";
+import Hero from "../components/ui/Hero";
+import ProductsGrid from "../components/products/ProductsGrid";
 import { Link } from "react-router-dom";
-import Footer from "../components/Footer";
+import Footer from "../components/Layout/Footer";
 import { MoveRight } from "lucide-react";
 
+// Home page with hero section and featured products
 const Home = () => {
   return (
     <>
@@ -12,10 +13,11 @@ const Home = () => {
       <h2 className="font-medium text-3xl md:text-4xl lg:text-6xl text-center my-10">
         Some of our products
       </h2>
-      <ProductsSection
+      <ProductsGrid
         numberOfProducts={6}
         gridCols="grid-cols-1 md:grid-cols-3"
       />
+      {/* Link to all products */}
       <h3 className="flex justify-end items-end font-medium text-3xl text-end md:mt-10 w-5/6">
         <Link to="/products">
           <div className="flex justify-center items-center gap-2 md:gap-3">

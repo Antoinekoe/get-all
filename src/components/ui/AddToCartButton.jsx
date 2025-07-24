@@ -1,8 +1,9 @@
 import React from "react";
-import { useCart } from "../hooks/useCart";
+import { useCart } from "../../hooks/useCart";
 import { toast } from "react-toastify";
 
-const ButtonCart = ({ id, images, price, title, autoOpen = true }) => {
+// Add to cart button with notification
+const AddToCartButton = ({ id, images, price, title, autoOpen = true }) => {
   const { setProducts, setIsOpen } = useCart();
 
   const handleClick = () => {
@@ -59,4 +60,4 @@ const ButtonCart = ({ id, images, price, title, autoOpen = true }) => {
   );
 };
 
-export default ButtonCart;
+export default AddToCartButton;

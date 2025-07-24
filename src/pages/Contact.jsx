@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import Menu from "../components/Menu";
-import Footer from "../components/Footer";
+import Menu from "../components/Layout/Menu";
+import Footer from "../components/Layout/Footer";
 
 const Contact = () => {
   useEffect(() => {

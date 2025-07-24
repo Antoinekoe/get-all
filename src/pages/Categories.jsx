@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import Menu from "../components/Menu";
-import { Link } from "react-router-dom";
-import Footer from "../components/Footer";
+import Menu from "../components/Layout/Menu";
+import Footer from "../components/Layout/Footer";
 import { getAllCategories, getCategoryImages } from "../services/DummyAPI";
-import CategoryGrid from "../components/CategoryGrid";
+import CategoryGrid from "../components/Categories/CategoryGrid";
 import { useCategories } from "../hooks/useCategories";
 
 const Categories = () => {

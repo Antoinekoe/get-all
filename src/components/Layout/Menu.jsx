@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu as MenuIcon, X } from "lucide-react"; // Import icons
-import Cart from "./Cart";
-import { useCart } from "../hooks/useCart";
+import { Menu as MenuIcon, X } from "lucide-react";
+import Cart from "../cart/Cart";
+import { useCart } from "../../hooks/useCart";
 
+// Main navigation component with responsive menu
 const Menu = () => {
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { isOpen: isCartOpen } = useCart();
 
-  // Manage all routes (exact and startswith)
+  // Check if current route is active
   const isActive = (path, exact = false) => {
     if (exact) {
       return location.pathname === path;
@@ -33,7 +34,7 @@ const Menu = () => {
           />
         </Link>
 
-        {/* Desktop Menu - Hidden on mobile */}
+        {/* Desktop navigation menu */}
         <ul className="hidden lg:flex fixed z-10000 left-1/2 -translate-x-1/2 justify-center items-center gap-10 bg-white shadow-uniform p-5 rounded-4xl">
           <li>
             <Link
@@ -71,7 +72,7 @@ const Menu = () => {
           </li>
         </ul>
 
-        {/* Mobile Menu Button - positioned at right-4 on mobile */}
+        {/* Mobile menu toggle button */}
         <button
           className={`lg:hidden z-10001 p-3 fixed right-4 top-4 ${
             isCartOpen ? "hidden" : "block"
@@ -86,10 +87,9 @@ const Menu = () => {
           )}
         </button>
 
-        {/* Mobile Menu - Full height and half width */}
+        {/* Mobile menu sidebar */}
         {isMenuOpen && (
           <div className="md:hidden fixed top-0 right-0 w-1/2 h-full bg-white shadow-lg z-10000 border-l">
-            {/* Mobile Menu Items */}
             <ul className="flex flex-col p-6 space-y-6 mt-20">
               <li>
                 <Link
@@ -147,7 +147,6 @@ const Menu = () => {
           </div>
         )}
 
-        {/* Cart - Now positioned relative to burger menu */}
         <div className="justify-end">
           <Cart />
         </div>

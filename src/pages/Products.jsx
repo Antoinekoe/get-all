@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
-import Menu from "../components/Menu";
-import ProductsSection from "../components/ProductsSection";
-import Footer from "../components/Footer";
-import Searchbar from "../components/Searchbar";
+import Menu from "../components/Layout/Menu";
+import ProductsGrid from "../components/products/ProductsGrid";
+import Footer from "../components/Layout/Footer";
+import Searchbar from "../components/ui/Searchbar";
 import { useNavigate, useParams } from "react-router-dom";
 import { useCategories } from "../hooks/useCategories";
 import { capitalizeAndDeleteDash } from "../utils/stringUtils";
 import Select from "react-select";
 
+// Products page with search and category filtering
 const Products = () => {
   const { search, category } = useParams();
   const { allCategories } = useCategories();
@@ -15,14 +16,17 @@ const Products = () => {
 
   const navigate = useNavigate();
 
+  // Handle category selection
   const handleChange = (selectedOption) => {
     setSelectedCategory(selectedOption ? selectedOption.value : "");
   };
 
+  // Navigate to selected category
   useEffect(() => {
     navigate(`/products/category/${selectedCategory}`);
   }, [selectedCategory]);
 
+  // Format categories for select dropdown
   const options = allCategories.map((cat) => ({
     value: cat,
     label: capitalizeAndDeleteDash(cat),
@@ -36,6 +40,7 @@ const Products = () => {
           <h1 className="font-medium text-3xl md:text-4xl lg:text-6xl text-center my-15">
             Our products
           </h1>
+          {/* Search and filter controls */}
           <div className="flex flex-col md:flex-row gap-6 md:gap-10 items-center justify-center">
             <Searchbar />
             <div className="flex relative shadow-uniform justify-center items-center bg-white rounded-2xl px-4 w-60 md:w-96">
@@ -92,7 +97,7 @@ const Products = () => {
           </div>
         </div>
       </div>
-      <ProductsSection
+      <ProductsGrid
         numberOfProducts={25}
         paginationLimit={9}
         searchTerm={search}

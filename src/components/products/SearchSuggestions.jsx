@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const ProductsSuggested = ({
+const SearchSuggestions = ({
   productsSuggested,
   resetProductsSuggested,
   resetSearchTerm,
@@ -28,4 +28,4 @@ const ProductsSuggested = ({
   );
 };
 
-export default ProductsSuggested;
+export default SearchSuggestions;

@@ -1,6 +1,5 @@
 import React from "react";
-import { Star } from "lucide-react";
-import Rating from "./Rating";
+import Rating from "../ui/Rating";
 
 const Review = ({ review }) => {
   return (

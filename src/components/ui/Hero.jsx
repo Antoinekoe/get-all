@@ -1,7 +1,8 @@
 import React from "react";
-import Menu from "./Menu";
-import Searchbar from "./Searchbar";
+import Menu from "../Layout/Menu";
+import Searchbar from "../ui/Searchbar";
 
+// Main hero section with navigation and search
 const Hero = () => {
   return (
     <div className="bg-[#EAE4D5] min-h-screen">

@@ -1,10 +1,12 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import ButtonCart from "./ButtonCart";
+import AddToCartButton from "../ui/AddToCartButton";
 
+// Individual product card component
 const Product = ({ id, images, category, description, price, title }) => {
   const navigate = useNavigate();
 
+  // Navigate to product details page
   const handleClick = (id) => {
     navigate(`/products/details/${id}`);
     window.scrollTo(0, 0);
@@ -26,8 +28,9 @@ const Product = ({ id, images, category, description, price, title }) => {
         </div>
         <span className="text-center break-words w-full">{description}</span>
       </div>
+      {/* Product actions */}
       <div className="flex flex-col md:flex-row gap-3 md:gap-5 justify-center items-center w-full mt-auto">
-        <ButtonCart
+        <AddToCartButton
           id={id}
           images={images}
           category={category}

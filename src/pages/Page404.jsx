@@ -1,5 +1,5 @@
 import React from "react";
-import Menu from "../components/Menu";
+import Menu from "../components/Layout/Menu";
 
 const Page404 = () => {
   return (
