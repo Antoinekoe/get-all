@@ -4,10 +4,17 @@ import Footer from "../components/Footer";
 import Menu from "../components/Menu";
 import { useGroupedProducts } from "../hooks/useGroupedProducts";
 import { useTotalPrice } from "../hooks/useTotalPrice";
+import { useDeleteSingleProduct } from "../hooks/useDeleteSingleProduct";
+import { useDeleteAllProducts } from "../hooks/useDeleteAllProducts";
+import { useHandleClickPlus } from "../hooks/useHandleClickPlus";
+import { Trash } from "lucide-react";
 
 const CheckoutCart = () => {
   const { products, isOpen, setIsOpen, setProducts } = useCart();
   const groupedProducts = useGroupedProducts();
+  const deleteSingleProduct = useDeleteSingleProduct();
+  const deleteAllProducts = useDeleteAllProducts();
+  const handleClickPlus = useHandleClickPlus();
   const totalPrice = useTotalPrice();
 
   useEffect(() => {
@@ -47,9 +54,27 @@ const CheckoutCart = () => {
               />
               <div className="flex flex-col gap-2">
                 <span className="text-4xl">{group.product.title}</span>
-                <div className="flex gap-2">
-                  <span>Quantity :</span>
-                  <span>{group.quantity}</span>
+                <div className="flex gap-4">
+                  <div className="flex gap-2 border-2 rounded-2xl px-2 w-fit">
+                    <span>Quantity :</span>
+                    <span
+                      onClick={() => deleteSingleProduct(group.cartItemIds[0])}
+                      className="hover:cursor-pointer"
+                    >
+                      -
+                    </span>
+                    <span>{group.quantity}</span>
+                    <span
+                      onClick={() => handleClickPlus(group)}
+                      className="hover:cursor-pointer"
+                    >
+                      +
+                    </span>
+                  </div>
+                  <Trash
+                    className="cursor-pointer hover:stroke-red-400"
+                    onClick={() => deleteAllProducts(group.product.id)}
+                  />
                 </div>
               </div>
               <div className="flex justify-end flex-1">

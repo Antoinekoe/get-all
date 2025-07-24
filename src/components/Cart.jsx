@@ -7,10 +7,16 @@ import { useCart } from "../hooks/useCart";
 import { Link } from "react-router-dom";
 import { useGroupedProducts } from "../hooks/useGroupedProducts";
 import { useTotalPrice } from "../hooks/useTotalPrice";
+import { useDeleteSingleProduct } from "../hooks/useDeleteSingleProduct";
+import { useDeleteAllProducts } from "../hooks/useDeleteAllProducts";
+import { useHandleClickPlus } from "../hooks/useHandleClickPlus";
 
 const Cart = () => {
   const { products, setProducts, isOpen, setIsOpen } = useCart();
   const groupedProducts = useGroupedProducts();
+  const deleteSingleProduct = useDeleteSingleProduct();
+  const deleteAllProducts = useDeleteAllProducts();
+  const handleClickPlus = useHandleClickPlus();
   const totalPrice = useTotalPrice();
 
   useEffect(() => {
@@ -20,42 +26,6 @@ const Cart = () => {
   // Toggle cart open/close state
   const handleClick = () => {
     setIsOpen(!isOpen);
-  };
-
-  // Remove product from cart by filtering out the product with matching cartItemId
-  const deleteSingleProduct = (cartItemId) => {
-    // Create new array without the deleted product
-    const newProducts = products.filter((product) => {
-      return product.cartItemId !== cartItemId;
-    });
-    // Update cart state with filtered products
-    setProducts(newProducts);
-  };
-
-  const deleteAllProducts = (id) => {
-    const newProducts = products.filter((product) => {
-      return product.id !== id;
-    });
-    // Update cart state with filtered products
-    setProducts(newProducts);
-  };
-
-  const handleClickPlus = (group) => {
-    // Create unique cart item ID using timestamp and random number
-    const cartItemId = `${
-      group.product.id
-    }_${Date.now()}_${Math.random().toString(36)}`;
-
-    setProducts((prevProducts) => [
-      ...prevProducts,
-      {
-        id: group.product.id,
-        title: group.product.title,
-        images: group.product.images,
-        price: group.product.price,
-        cartItemId, // Add unique cart item ID
-      },
-    ]);
   };
 
   // Render cart component based on open/close state
@@ -126,7 +96,7 @@ const Cart = () => {
                       <span>{group.product.title}</span>
                       {/* Product price */}
                       <span>{group.product.price} €</span>
-                      <div className="flex gap-2 border-2 rounded-2xl px-2">
+                      <div className="flex gap-2 border-2 rounded-2xl px-2 w-fit">
                         <span>Quantity :</span>
                         <span
                           onClick={() =>
