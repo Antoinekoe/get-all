@@ -11,6 +11,7 @@ const ProductsSection = ({
   paginationLimit = 0,
   searchTerm,
   categoryTerm,
+  gridCols = "grid-cols-2 md:grid-cols-3",
 }) => {
   // State for products and pagination
   const [products, setProducts] = useState([]);
@@ -80,7 +81,9 @@ const ProductsSection = ({
       {products.length > 0 ? (
         <>
           {/* Product grid display */}
-          <div className="grid grid-cols-3 items-center justify-items-center w-5/6 m-auto">
+          <div
+            className={`grid ${gridCols} items-center justify-items-center w-4/6 mt-10 m-auto gap-1 md:gap-12`}
+          >
             {productsInActualPage.map((product, index) => (
               <Product
                 key={index}

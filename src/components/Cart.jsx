@@ -1,5 +1,5 @@
 // Import React hooks and components
-import React, { useEffect, useState } from "react";
+import React from "react";
 // Import icons from lucide-react library
 import { ShoppingCart, Trash, X } from "lucide-react";
 // Import custom hook for cart functionality
@@ -12,16 +12,12 @@ import { useDeleteAllProducts } from "../hooks/useDeleteAllProducts";
 import { useHandleClickPlus } from "../hooks/useHandleClickPlus";
 
 const Cart = () => {
-  const { products, setProducts, isOpen, setIsOpen } = useCart();
+  const { products, isOpen, setIsOpen } = useCart();
   const groupedProducts = useGroupedProducts();
   const deleteSingleProduct = useDeleteSingleProduct();
   const deleteAllProducts = useDeleteAllProducts();
   const handleClickPlus = useHandleClickPlus();
   const totalPrice = useTotalPrice();
-
-  useEffect(() => {
-    console.log(groupedProducts);
-  }, [groupedProducts]);
 
   // Toggle cart open/close state
   const handleClick = () => {
@@ -34,15 +30,15 @@ const Cart = () => {
       // Cart is closed - show shopping cart icon and product count
       return (
         <div>
-          {/* Shopping cart icon - click to open cart */}
+          {/* Shopping cart icon - positioned for mobile and desktop */}
           <ShoppingCart
             color="white"
             size={56}
-            className="bg-[#B6B09F] py-3 rounded-4xl cursor-pointer fixed right-4 top-4"
+            className="bg-[#B6B09F] py-3 rounded-4xl cursor-pointer z-10000 fixed lg:right-4 right-20 top-4 lg:w-14 lg:h-14 w-12 h-12"
             onClick={handleClick}
           />
-          {/* Product count badge - shows number of items in cart */}
-          <div className="bg-[#B6B09F] text-white rounded-full py-1 px-3 cursor-pointer fixed right-4 top-15">
+          {/* Product count badge - positioned for mobile and desktop */}
+          <div className="bg-[#B6B09F] text-white rounded-full py-1 px-3 cursor-pointer fixed lg:right-4 lg:top-16 right-20 top-13">
             {products.length}
           </div>
         </div>
@@ -51,16 +47,16 @@ const Cart = () => {
       // Cart is open - show full cart interface
       return (
         <div>
-          {/* Close button (X icon) - click to close cart */}
+          {/* Close button (X icon) - positioned for mobile and desktop */}
           <X
             color="white"
             size={56}
-            className="bg-[#B6B09F] py-3 rounded-4xl cursor-pointer fixed right-4 top-4 z-5000"
+            className="bg-[#B6B09F] py-3 rounded-4xl cursor-pointer fixed lg:right-4 right-20 top-4 z-5001 lg:w-14 lg:h-14 w-12 h-12"
             onClick={handleClick}
           />
 
           {/* Cart sidebar container */}
-          <div className="flex flex-col border-l-2 border-[#B6B09F] w-60 h-full py-1 pt-20 fixed right-0 top-0 z-1000 bg-white">
+          <div className="flex flex-col border-l-2 border-[#B6B09F] w-60 h-full py-1 pt-20 fixed right-0 top-0 z-5000 bg-white">
             <div className="flex flex-col justify-center items-center h-max">
               {/* Conditional rendering based on cart content */}
               {products.length > 0 ? (

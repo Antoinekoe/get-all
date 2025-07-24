@@ -14,7 +14,7 @@ const ProductsSuggested = ({
     navigate(`/products/search/${productTitle}`);
   };
   return (
-    <div className="absolute flex flex-col gap-3 top-full mt-1 left-4 right-4 rounded bg-white border border-gray-200 shadow-lg z-50 max-h-60 overflow-y-auto">
+    <div className="absolute flex flex-col gap-3 top-full left-4 right-4 rounded bg-white border border-gray-200 shadow-lg z-50 max-h-60 overflow-y-auto">
       {productsSuggested.map((product, index) => (
         <div
           key={index}

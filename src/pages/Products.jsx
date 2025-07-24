@@ -16,75 +16,79 @@ const Products = () => {
   const navigate = useNavigate();
 
   const handleChange = (selectedOption) => {
-    {
-      selectedOption
-        ? setSelectedCategory(selectedOption.value)
-        : setSelectedCategory("");
-    }
+    setSelectedCategory(selectedOption ? selectedOption.value : "");
   };
 
   useEffect(() => {
     navigate(`/products/category/${selectedCategory}`);
   }, [selectedCategory]);
 
-  const options = [
-    { value: "", label: "Filter by category" },
-    ...allCategories.map((cat) => ({
-      value: cat,
-      label: capitalizeAndDeleteDash(cat),
-    })),
-  ];
+  const options = allCategories.map((cat) => ({
+    value: cat,
+    label: capitalizeAndDeleteDash(cat),
+  }));
 
   return (
     <>
       <Menu />
-      <div className="flex flex-col justify-center items-center gap-10 my-20">
-        <h1 className="font-medium text-6xl text-center my-10">Our products</h1>
-        <div className="flex gap-10">
-          <Searchbar />
-          <div className="flex shadow-uniform justify-center items-center bg-white rounded-2xl px-4 w-96">
-            <Select
-              options={options}
-              onChange={handleChange}
-              placeholder="Filter by category"
-              isClearable={true}
-              className="w-full"
-              styles={{
-                control: (provided) => ({
-                  ...provided,
-                  border: "none",
-                  boxShadow: "none",
-                  backgroundColor: "transparent",
-                }),
-                option: (provided, state) => ({
-                  ...provided,
-                  backgroundColor: state.isSelected
-                    ? "#B6B09F"
-                    : state.isFocused
-                    ? "#B6B09F"
-                    : "white",
-                  color: state.isSelected
-                    ? "black"
-                    : state.isFocused
-                    ? "#your-focus-text-color"
-                    : "#374151",
-                  padding: "12px 16px",
-                  cursor: "pointer",
-                  "&:hover": {
-                    backgroundColor: "#B6B09F",
+      <div className="pt-10 md:pt-20 px-4">
+        <div className="w-full max-w-7xl mx-auto">
+          <h1 className="font-medium text-3xl md:text-4xl lg:text-6xl text-center my-15">
+            Our products
+          </h1>
+          <div className="flex flex-col md:flex-row gap-6 md:gap-10 items-center justify-center">
+            <Searchbar />
+            <div className="flex relative shadow-uniform justify-center items-center bg-white rounded-2xl px-4 w-60 md:w-96">
+              <Select
+                options={options}
+                onChange={handleChange}
+                placeholder="Filter by category"
+                isClearable={true}
+                className="w-full"
+                value={
+                  selectedCategory
+                    ? options.find(
+                        (option) => option.value === selectedCategory
+                      )
+                    : null
+                }
+                styles={{
+                  control: (provided) => ({
+                    ...provided,
+                    border: "none",
+                    boxShadow: "none",
+                    backgroundColor: "transparent",
+                  }),
+                  option: (provided, state) => ({
+                    ...provided,
+                    backgroundColor: state.isSelected
+                      ? "#B6B09F"
+                      : state.isFocused
+                      ? "#B6B09F"
+                      : "white",
+                    color: state.isSelected
+                      ? "black"
+                      : state.isFocused
+                      ? "#your-focus-text-color"
+                      : "#374151",
+                    padding: "12px 16px",
                     cursor: "pointer",
-                  },
-                }),
-                dropdownIndicator: (provided) => ({
-                  ...provided,
-                  color: "black",
-                  "&:hover": {
+                    "&:hover": {
+                      backgroundColor: "#B6B09F",
+                      cursor: "pointer",
+                    },
+                  }),
+                  dropdownIndicator: (provided) => ({
+                    ...provided,
                     color: "black",
-                    cursor: "pointer",
-                  },
-                }),
-              }}
-            />
+                    "&:hover": {
+                      color: "black",
+                      cursor: "pointer",
+                    },
+                  }),
+                }}
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -93,6 +97,7 @@ const Products = () => {
         paginationLimit={9}
         searchTerm={search}
         categoryTerm={category}
+        gridCols="grid-cols-1 md:grid-cols-3"
       />
       <Footer />
     </>

@@ -2,7 +2,7 @@ import React from "react";
 import { useCart } from "../hooks/useCart";
 import { toast } from "react-toastify";
 
-const ButtonCart = ({ id, images, price, title }) => {
+const ButtonCart = ({ id, images, price, title, autoOpen = true }) => {
   const { setProducts, setIsOpen } = useCart();
 
   const handleClick = () => {
@@ -39,7 +39,13 @@ const ButtonCart = ({ id, images, price, title }) => {
       });
     }
 
-    setIsOpen(true);
+    // Open cart automatically only if autoOpen is true and on desktop
+    if (autoOpen) {
+      // Open cart automatically only on desktop (screen width >= 768px)
+      if (window.innerWidth >= 768) {
+        setIsOpen(true);
+      }
+    }
   };
   return (
     <div className="flex gap-0">

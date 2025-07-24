@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { Menu as MenuIcon, X } from "lucide-react"; // Import icons
 import Cart from "./Cart";
+import { useCart } from "../hooks/useCart";
 
 const Menu = () => {
   const location = useLocation();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isOpen: isCartOpen } = useCart();
 
   // Manage all routes (exact and startswith)
   const isActive = (path, exact = false) => {
@@ -12,13 +16,25 @@ const Menu = () => {
     }
     return location.pathname.startsWith(path);
   };
+
+  // Close mobile menu when clicking a link
+  const handleLinkClick = () => {
+    setIsMenuOpen(false);
+  };
+
   return (
-    <header className="px-4 py-6">
-      <nav className="flex justify-between items-center ">
-        <Link to="/">
-          <img src="../../src/assets/logo.png" alt="Logo" />
+    <header className="px-4 py-6 w-full max-w-full overflow-hidden">
+      <nav className="flex justify-between items-center w-full">
+        <Link to="/" className="flex-shrink-0">
+          <img
+            src="../../src/assets/logo.png"
+            alt="Logo"
+            className="max-w-full h-auto"
+          />
         </Link>
-        <ul className="flex fixed z-10000 left-1/2 -translate-x-1/2 justify-center items-center gap-10 bg-white shadow-uniform p-5 rounded-4xl">
+
+        {/* Desktop Menu - Hidden on mobile */}
+        <ul className="hidden lg:flex fixed z-10000 left-1/2 -translate-x-1/2 justify-center items-center gap-10 bg-white shadow-uniform p-5 rounded-4xl">
           <li>
             <Link
               to="/"
@@ -54,7 +70,85 @@ const Menu = () => {
             </Link>
           </li>
         </ul>
-        <div className="justify-end fixed">
+
+        {/* Mobile Menu Button - positioned at right-4 on mobile */}
+        <button
+          className={`lg:hidden z-10001 p-3 fixed right-4 top-4 ${
+            isCartOpen ? "hidden" : "block"
+          }`}
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          aria-label="Toggle menu"
+        >
+          {isMenuOpen ? (
+            <X size={32} className="text-gray-800" />
+          ) : (
+            <MenuIcon size={32} className="text-gray-800" />
+          )}
+        </button>
+
+        {/* Mobile Menu - Full height and half width */}
+        {isMenuOpen && (
+          <div className="md:hidden fixed top-0 right-0 w-1/2 h-full bg-white shadow-lg z-10000 border-l">
+            {/* Mobile Menu Items */}
+            <ul className="flex flex-col p-6 space-y-6 mt-20">
+              <li>
+                <Link
+                  to="/"
+                  className={`block py-3 px-4 rounded-lg transition-colors text-lg ${
+                    isActive("/", true)
+                      ? "bg-[#B6B09F] text-white"
+                      : "text-black hover:bg-gray-100"
+                  }`}
+                  onClick={handleLinkClick}
+                >
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/products"
+                  className={`block py-3 px-4 rounded-lg transition-colors text-lg ${
+                    isActive("/products")
+                      ? "bg-[#B6B09F] text-white"
+                      : "text-black hover:bg-gray-100"
+                  }`}
+                  onClick={handleLinkClick}
+                >
+                  Products
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/categories"
+                  className={`block py-3 px-4 rounded-lg transition-colors text-lg ${
+                    isActive("/categories")
+                      ? "bg-[#B6B09F] text-white"
+                      : "text-black hover:bg-gray-100"
+                  }`}
+                  onClick={handleLinkClick}
+                >
+                  Categories
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/contact"
+                  className={`block py-3 px-4 rounded-lg transition-colors text-lg ${
+                    isActive("/contact", true)
+                      ? "bg-[#B6B09F] text-white"
+                      : "text-black hover:bg-gray-100"
+                  }`}
+                  onClick={handleLinkClick}
+                >
+                  Contact
+                </Link>
+              </li>
+            </ul>
+          </div>
+        )}
+
+        {/* Cart - Now positioned relative to burger menu */}
+        <div className="justify-end">
           <Cart />
         </div>
       </nav>

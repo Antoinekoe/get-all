@@ -12,6 +12,10 @@ const Categories = () => {
   const { allCategories, isLoading, setAllCategories, setIsLoading } =
     useCategories();
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   // Load all categories on component mount
   useEffect(() => {
     getAllCategories().then((data) => {
@@ -78,8 +82,8 @@ const Categories = () => {
   return (
     <>
       <Menu />
-      <div className="pt-20">
-        <h1 className="font-medium text-6xl text-center my-15">
+      <div className="pt-10 md:pt-20">
+        <h1 className="font-medium text-3xl md:text-4xl lg:text-6xl text-center my-15">
           Choose your category
         </h1>
         {renderAllGrids()}

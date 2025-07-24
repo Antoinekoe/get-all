@@ -11,16 +11,22 @@ const Product = ({ id, images, category, description, price, title }) => {
   };
 
   return (
-    <div className="flex flex-col gap-2 w-3/4 pb-6">
-      <img src={images[0]} alt="Product image" />
-      <h3 className="text-5xl">{title}</h3>
-      <div className="flex">
-        <span className="text-2xl">
-          {price} € - {category}
-        </span>
+    <div className="flex flex-col gap-4 w-full pb-6 items-center text-center justify-between h-full">
+      <div className="flex flex-col gap-4 items-center text-center w-full">
+        <img
+          src={images[0]}
+          alt="Product image"
+          className="w-full md:w-3/4 max-w-full h-auto object-contain"
+        />
+        <h3 className="text-3xl text-center break-words w-full">{title}</h3>
+        <div className="flex justify-center w-full">
+          <span className="text-2xl text-center">
+            {price} € - {category}
+          </span>
+        </div>
+        <span className="text-center break-words w-full">{description}</span>
       </div>
-      <span>{description}</span>
-      <div className="flex gap-5">
+      <div className="flex flex-col md:flex-row gap-3 md:gap-5 justify-center items-center w-full mt-auto">
         <ButtonCart
           id={id}
           images={images}

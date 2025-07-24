@@ -88,7 +88,9 @@ const CheckoutCart = () => {
         <div className="bg-[#B6B09F] text-white flex flex-col h-36 px-4 py-6 justify-center items-center gap-4">
           <div className="flex gap-2 justify-center items-center">
             <span className="text-2xl">Total :</span>
-            <span className="text-2xl font-bold">{totalPrice} €</span>
+            <span className="text-2xl font-bold">
+              {totalPrice.toFixed(2)} €
+            </span>
           </div>
           <button className="bg-white text-black w-6/12 mx-auto rounded-2xl py-2 font-bold hover:cursor-pointer">
             Pay
