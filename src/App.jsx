@@ -6,6 +6,7 @@ import Contact from "./pages/Contact";
 import Page404 from "./pages/Page404";
 import ProductDetails from "./pages/ProductDetails";
 import { ToastContainer } from "react-toastify";
+import CheckoutCart from "./pages/CheckoutCart";
 
 function App() {
   return (
@@ -30,6 +31,8 @@ function App() {
           path="/products/details/:id"
           element={<ProductDetails />}
         ></Route>
+
+        <Route path="/checkoutcart" element={<CheckoutCart />}></Route>
 
         {/* Other pages */}
         <Route path="/categories" element={<Categories />}></Route>

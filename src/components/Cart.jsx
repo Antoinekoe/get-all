@@ -4,34 +4,14 @@ import React, { useEffect, useState } from "react";
 import { ShoppingCart, Trash, X } from "lucide-react";
 // Import custom hook for cart functionality
 import { useCart } from "../hooks/useCart";
+import { Link } from "react-router-dom";
+import { useGroupedProducts } from "../hooks/useGroupedProducts";
+import { useTotalPrice } from "../hooks/useTotalPrice";
 
 const Cart = () => {
   const { products, setProducts, isOpen, setIsOpen } = useCart();
-  const [totalPrice, setTotalPrice] = useState(0);
-
-  // Reduce the products in carts in groups
-  const groupedProducts = products.reduce((groups, product) => {
-    // Search if a group already exist with the product ID
-    const existingGroups = groups.find(
-      (group) => group.product.id === product.id
-    );
-
-    // If yes, add 1 to quantity and push the product cardsItemId
-
-    if (existingGroups) {
-      existingGroups.quantity += 1;
-      existingGroups.cartItemIds.push(product.cardsItemId);
-
-      // If no, create a group with the object product that stores the ID, create a quantity of 1 and stores the cartItemIds
-    } else {
-      groups.push({
-        product: product,
-        quantity: 1,
-        cartItemIds: [product.cartItemId],
-      });
-    }
-    return groups;
-  }, []);
+  const groupedProducts = useGroupedProducts();
+  const totalPrice = useTotalPrice();
 
   useEffect(() => {
     console.log(groupedProducts);
@@ -41,12 +21,6 @@ const Cart = () => {
   const handleClick = () => {
     setIsOpen(!isOpen);
   };
-
-  // Calculate total price whenever products change
-  useEffect(() => {
-    const total = products.reduce((sum, product) => sum + product.price, 0);
-    setTotalPrice(total);
-  }, [products]);
 
   // Remove product from cart by filtering out the product with matching cartItemId
   const deleteSingleProduct = (cartItemId) => {
@@ -129,9 +103,12 @@ const Cart = () => {
                       {totalPrice.toFixed(2)} €
                     </span>
                     {/* Checkout button */}
-                    <button className="border-2 rounded-2xl px-5 py-1 hover:cursor-pointer hover:bg-[#B6B09F] hover:text-white">
+                    <Link
+                      to={"/checkoutcart"}
+                      className="border-2 rounded-2xl px-5 py-1 hover:cursor-pointer hover:bg-[#B6B09F] hover:text-white"
+                    >
                       Go to cart
-                    </button>
+                    </Link>
                   </div>
                   {/* Product list - show only first 3 products */}
                   {groupedProducts.slice(0, 3).map((group) => (
