@@ -69,7 +69,12 @@ const ProductDetails = () => {
               </span>{" "}
               global review note
             </span>
-            <ButtonCart />
+            <ButtonCart
+              id={productSelected.id}
+              images={productSelected.images}
+              price={productSelected.price}
+              title={productSelected.title}
+            />
           </div>
         </div>
         {/* Customer reviews */}

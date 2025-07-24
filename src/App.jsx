@@ -5,10 +5,12 @@ import Categories from "./pages/Categories";
 import Contact from "./pages/Contact";
 import Page404 from "./pages/Page404";
 import ProductDetails from "./pages/ProductDetails";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
     <>
+      <ToastContainer></ToastContainer>
       <Routes>
         {/* Main routes */}
         <Route path="/" element={<Home />}></Route>

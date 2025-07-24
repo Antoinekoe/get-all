@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Hero from "../components/Hero";
 import ProductsSection from "../components/ProductsSection";
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
 import { MoveRight } from "lucide-react";
+import { useCart } from "../hooks/useCart";
 
 const Home = () => {
   return (

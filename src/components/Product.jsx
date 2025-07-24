@@ -21,7 +21,14 @@ const Product = ({ id, images, category, description, price, title }) => {
       </div>
       <span>{description}</span>
       <div className="flex gap-5">
-        <ButtonCart />
+        <ButtonCart
+          id={id}
+          images={images}
+          category={category}
+          description={description}
+          price={price}
+          title={title}
+        />
         <button
           onClick={() => handleClick(id)}
           className="rounded-4xl px-3 py-2 border-[1.5px] hover:cursor-pointer hover:bg-black hover:text-white"

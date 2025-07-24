@@ -12,10 +12,15 @@ const Products = () => {
   const { search, category } = useParams();
   const { allCategories } = useCategories();
   const [selectedCategory, setSelectedCategory] = useState("");
+
   const navigate = useNavigate();
 
   const handleChange = (selectedOption) => {
-    setSelectedCategory(selectedOption.value);
+    {
+      selectedOption
+        ? setSelectedCategory(selectedOption.value)
+        : setSelectedCategory("");
+    }
   };
 
   useEffect(() => {
