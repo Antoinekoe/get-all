@@ -33,6 +33,10 @@ const Cart = () => {
     return groups;
   }, []);
 
+  useEffect(() => {
+    console.log(groupedProducts);
+  }, [groupedProducts]);
+
   // Toggle cart open/close state
   const handleClick = () => {
     setIsOpen(!isOpen);
@@ -67,9 +71,6 @@ const Cart = () => {
     const cartItemId = `${
       group.product.id
     }_${Date.now()}_${Math.random().toString(36)}`;
-
-    console.log(group);
-    console.log(cartItemId);
 
     setProducts((prevProducts) => [
       ...prevProducts,
@@ -175,9 +176,9 @@ const Cart = () => {
                     </div>
                   ))}
                   {/* Show "more products" message if cart has more than 3 items */}
-                  {products.length > 3 && (
+                  {groupedProducts.length > 3 && (
                     <div className="text-center text-gray-600 py-2">
-                      (+{products.length - 3} more)
+                      (+{groupedProducts.length - 3} more)
                     </div>
                   )}
                 </>

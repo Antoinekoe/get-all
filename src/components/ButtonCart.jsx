@@ -28,7 +28,7 @@ const ButtonCart = ({ id, images, price, title }) => {
     } else {
       toast.success("Produit ajouté !", {
         toastId: "product-added",
-        position: "bottom-right",
+        position: "bottom-left",
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: false,
