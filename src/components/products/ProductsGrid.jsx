@@ -99,7 +99,7 @@ const ProductsGrid = ({
           >
             {productsInActualPage.map((product, index) => (
               <Product
-                key={index}
+                key={`${categoryTerm || "all"}-${product.id}-${index}`}
                 id={product.id}
                 category={capitalizeAndDeleteDash(product.category)}
                 description={product.description}
