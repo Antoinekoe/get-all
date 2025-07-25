@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu as MenuIcon, X } from "lucide-react";
 import Cart from "../cart/Cart";
@@ -9,7 +9,7 @@ import logo from "../../assets/logo.png";
 const Menu = () => {
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { isOpen: isCartOpen } = useCart();
+  const { isOpen: isCartOpen, setIsOpen: setIsCartOpen } = useCart();
 
   // Check if current route is active
   const isActive = (path, exact = false) => {
@@ -22,6 +22,30 @@ const Menu = () => {
   // Close mobile menu when clicking a link
   const handleLinkClick = () => {
     setIsMenuOpen(false);
+  };
+
+  // Handle mobile menu toggle and close cart if open
+  const handleMenuToggle = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  // Close cart when mobile menu opens
+  useEffect(() => {
+    if (isMenuOpen && isCartOpen) {
+      setIsCartOpen(false);
+    }
+  }, [isMenuOpen, isCartOpen, setIsCartOpen]);
+
+  // Handle scroll to prevent main page scroll when at mobile menu bottom
+  const handleMenuScroll = (e) => {
+    const element = e.target;
+    const isAtBottom =
+      element.scrollHeight - element.scrollTop <= element.clientHeight + 1;
+
+    if (isAtBottom) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
   };
 
   return (
@@ -71,10 +95,10 @@ const Menu = () => {
 
         {/* Mobile menu toggle button */}
         <button
-          className={`lg:hidden z-10001 p-3 fixed right-4 top-4 ${
+          className={`lg:hidden z-[999999] p-3 fixed right-4 top-4 ${
             isCartOpen ? "hidden" : "block"
           }`}
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          onClick={handleMenuToggle}
           aria-label="Toggle menu"
         >
           {isMenuOpen ? (
@@ -86,7 +110,10 @@ const Menu = () => {
 
         {/* Mobile menu sidebar */}
         {isMenuOpen && (
-          <div className="md:hidden fixed top-0 right-0 w-1/2 h-full bg-white shadow-lg z-10000 border-l">
+          <div
+            className="md:hidden fixed top-0 right-0 w-1/2 h-full bg-white shadow-lg z-[99999] border-l overflow-y-auto"
+            onScroll={handleMenuScroll}
+          >
             <ul className="flex flex-col p-6 space-y-6 mt-20">
               <li>
                 <Link

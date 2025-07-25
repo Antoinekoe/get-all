@@ -18,6 +18,21 @@ const ProductsGrid = ({
   const [products, setProducts] = useState([]);
   const [productsInActualPage, setProductsInActualPage] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // If there's a pagination set, show current page products
+  const currentPageProducts = useMemo(() => {
+    if (paginationLimit > 0) {
+      const startIndex = (currentPage - 1) * paginationLimit;
+      const endIndex = startIndex + paginationLimit;
+      return products.slice(startIndex, endIndex);
+    }
+    return products;
+  }, [products, currentPage, paginationLimit]);
+
+  useEffect(() => {
+    setProductsInActualPage(currentPageProducts);
+  }, [currentPageProducts]);
 
   // Set the total pages, isFirstPage and isLastPage.
   const paginationInfo = useMemo(() => {
@@ -39,38 +54,31 @@ const ProductsGrid = ({
     });
   }, []);
 
-  // If there's a pagination set, show current page products
-  const currentPageProducts = useMemo(() => {
-    if (paginationLimit > 0) {
-      const startIndex = (currentPage - 1) * paginationLimit;
-      const endIndex = startIndex + paginationLimit;
-      return products.slice(startIndex, endIndex);
-    }
-    return products;
-  }, [products, currentPage, paginationLimit]);
-
-  useEffect(() => {
-    setProductsInActualPage(currentPageProducts);
-  }, [currentPageProducts]);
-
   useEffect(() => {
     const fetchProducts = async () => {
-      if (!searchTerm && !categoryTerm) {
-        const data = await getProducts(numberOfProducts, paginationLimit);
-        setProducts(data);
-        setCurrentPage(1);
-      } else if (searchTerm && !categoryTerm) {
-        const data = await getProductsWithSearch(
-          numberOfProducts,
-          paginationLimit,
-          searchTerm
-        );
-        setProducts(data);
-        setCurrentPage(1);
-      } else if (!searchTerm && categoryTerm) {
-        const data = await getProductsByCategory(categoryTerm);
-        setProducts(data.products);
-        setCurrentPage(1);
+      setIsLoading(true);
+      try {
+        if (!searchTerm && !categoryTerm) {
+          const data = await getProducts(numberOfProducts, paginationLimit);
+          setProducts(data);
+          setCurrentPage(1);
+        } else if (searchTerm && !categoryTerm) {
+          const data = await getProductsWithSearch(
+            numberOfProducts,
+            paginationLimit,
+            searchTerm
+          );
+          setProducts(data);
+          setCurrentPage(1);
+        } else if (!searchTerm && categoryTerm) {
+          const data = await getProductsByCategory(categoryTerm);
+          setProducts(data.products);
+          setCurrentPage(1);
+        }
+      } catch (err) {
+        console.error("Error fetching products:", err);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchProducts();

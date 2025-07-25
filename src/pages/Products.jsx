@@ -24,7 +24,7 @@ const Products = () => {
   // Navigate to selected category
   useEffect(() => {
     navigate(`/products/category/${selectedCategory}`);
-  }, [selectedCategory]);
+  }, [selectedCategory, navigate]);
 
   // Format categories for select dropdown
   const options = allCategories.map((cat) => ({
