@@ -52,7 +52,7 @@ const AddToCartButton = ({ id, images, price, title, autoOpen = true }) => {
     <div className="flex gap-0">
       <button
         onClick={handleClick}
-        className="flex bg-[#B6B09F] text-white w-fit rounded-4xl px-3 py-2 hover:cursor-pointer hover:shadow-lg"
+        className="flex bg-[#B6B09F] text-white w-32 rounded-4xl px-3 py-2 hover:cursor-pointer hover:shadow-lg justify-center"
       >
         Add to cart
       </button>

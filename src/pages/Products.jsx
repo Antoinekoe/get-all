@@ -12,19 +12,35 @@ import Select from "react-select";
 const Products = () => {
   const { search, category } = useParams();
   const { allCategories } = useCategories();
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const { selectedCategory, setSelectedCategory } = useCategories();
 
   const navigate = useNavigate();
 
-  // Handle category selection
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  // Handle category selection in product page
   const handleChange = (selectedOption) => {
-    setSelectedCategory(selectedOption ? selectedOption.value : "");
+    console.log(selectedOption);
+    const newCategory = selectedOption ? selectedOption.value : "";
+    setSelectedCategory(newCategory);
+
+    if (newCategory) {
+      navigate(`/products/category/${newCategory}`);
+    } else {
+      navigate("/products");
+    }
   };
 
-  // Navigate to selected category
+  // Handle category selection from categories page
   useEffect(() => {
-    navigate(`/products/category/${selectedCategory}`);
-  }, [selectedCategory, navigate]);
+    if (category) {
+      setSelectedCategory(category);
+    } else {
+      setSelectedCategory("");
+    }
+  }, [category, setSelectedCategory]);
 
   // Format categories for select dropdown
   const options = allCategories.map((cat) => ({

@@ -5,6 +5,7 @@ export const useCategories = () => {
   const [allCategories, setAllCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   const fetchCategories = useCallback(async () => {
     setIsLoading(true);
@@ -24,5 +25,13 @@ export const useCategories = () => {
     fetchCategories();
   }, [fetchCategories]);
 
-  return { allCategories, isLoading, error, setAllCategories, setIsLoading };
+  return {
+    allCategories,
+    isLoading,
+    error,
+    setAllCategories,
+    setIsLoading,
+    selectedCategory,
+    setSelectedCategory,
+  };
 };

@@ -94,7 +94,6 @@ const Searchbar = () => {
           placeholder="An amazing vacuum cleaner"
           onChange={handleChange}
           value={searchTerm}
-          autoFocus
         />
         <Search className="cursor-pointer" onClick={handleSearch} />
       </form>

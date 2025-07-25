@@ -13,7 +13,7 @@ const Contact = () => {
         <h1 className="font-medium text-3xl md:text-4xl lg:text-6xl text-center my-15">
           Contact us
         </h1>
-        <form className="flex flex-col shadow-uniform justify-center items-center w-3/4 lg:w-1/3 m-auto rounded-2xl p-7 gap-8">
+        <form className="flex flex-col shadow-uniform justify-center items-center w-4/5 lg:w-1/3 m-auto rounded-2xl p-7 gap-8">
           <div className="flex justify-center items-center gap-5 w-full">
             <input
               type="text"
