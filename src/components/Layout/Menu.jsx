@@ -51,7 +51,7 @@ const Menu = () => {
   return (
     <header className="px-4 py-6 w-full max-w-full overflow-hidden">
       <nav className="flex justify-between items-center w-full">
-        <Link to="/" className="flex-shrink-0">
+        <Link to="/" className="flex flex-col self-start">
           <img src={logo} alt="Logo" className="max-w-full h-auto" />
         </Link>
 
@@ -92,12 +92,12 @@ const Menu = () => {
             </Link>
           </li>
         </ul>
-        <div className="flex justify-end w-full items-end pr-30">
+        <div className="flex justify-end w-full items-end pr-35 lg:pr-20">
           <Link
             to={"/login"}
-            className="bg-white px-10 py-3 shadow-uniform rounded-4xl"
+            className="bg-white px-4 py-2 lg:px-5 lg:py-3 shadow-uniform rounded-full"
           >
-            <div className="flex gap-3">
+            <div className="flex flex-col justify-center items-center gap-1">
               <UserRound />
               <span>Login</span>
             </div>
@@ -122,7 +122,7 @@ const Menu = () => {
         {/* Mobile menu sidebar */}
         {isMenuOpen && (
           <div
-            className="md:hidden fixed top-0 right-0 w-1/2 h-full bg-white shadow-lg z-[99999] border-l overflow-y-auto"
+            className="lg:hidden fixed top-0 right-0 w-1/2 h-full bg-white shadow-lg z-[99999] border-l overflow-y-auto"
             onScroll={handleMenuScroll}
           >
             <ul className="flex flex-col p-6 space-y-6 mt-20">

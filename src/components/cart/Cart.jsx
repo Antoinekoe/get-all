@@ -46,10 +46,10 @@ const Cart = () => {
           <ShoppingCart
             color="white"
             size={56}
-            className="bg-[#B6B09F] py-3 rounded-4xl cursor-pointer z-10000 fixed lg:right-4 right-20 top-4 lg:w-14 lg:h-14 w-12 h-12"
+            className="bg-[#B6B09F] py-3 rounded-4xl cursor-pointer z-10000 fixed lg:right-4 right-20 top-6 lg:w-14 lg:h-14 w-12 h-12"
             onClick={handleClick}
           />
-          <div className="bg-[#B6B09F] text-white rounded-full py-1 px-3 z-10001 cursor-pointer fixed lg:right-4 lg:top-16 right-20 top-13">
+          <div className="bg-[#B6B09F] text-white rounded-full py-1 px-3 z-10001 cursor-pointer fixed lg:right-4 lg:top-17 right-20 top-16">
             {products.length}
           </div>
         </div>
@@ -61,7 +61,7 @@ const Cart = () => {
           <X
             color="white"
             size={56}
-            className="bg-[#B6B09F] py-3 rounded-4xl cursor-pointer fixed lg:right-4 right-20 top-4 z-5001 lg:w-14 lg:h-14 w-12 h-12"
+            className="bg-[#B6B09F] py-3 rounded-4xl cursor-pointer fixed lg:right-4 right-20 top-6 z-5001 lg:w-14 lg:h-14 w-12 h-12"
             onClick={handleClick}
           />
 

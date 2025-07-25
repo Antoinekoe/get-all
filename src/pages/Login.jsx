@@ -12,9 +12,9 @@ const Login = () => {
       </div>
 
       <form
-        action="/"
+        action="https://dummyjson.com/user/login"
         method="POST"
-        className="flex flex-col flex-1 w-2/12 mx-auto rounded-2xl px-6 py-8 gap-5 justify-center border-1 border-[#B6B09F]"
+        className="flex flex-col flex-1 w-4/6 xl:w-2/7 mx-auto rounded-2xl px-6 py-8 gap-5 justify-center border-1 border-[#B6B09F]"
       >
         <img src={logo} alt="Logo" className="w-15 mx-auto" />
         <label>Username</label>
@@ -22,12 +22,14 @@ const Login = () => {
           type="text"
           className="border-1 border-[#B6B09F] rounded-2xl h-8 px-4"
           placeholder="Enter your username"
+          name="username"
         />
         <label>Password</label>
         <input
           type="text"
           className="border-1 border-[#B6B09F] rounded-2xl h-8 px-4"
           placeholder="Enter your password"
+          name="password"
         />
         <button className="flex justify-center items-center cursor-pointer li-item-active self-start w-full hover:shadow-lg">
           Send
