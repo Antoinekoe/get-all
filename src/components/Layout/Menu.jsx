@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu as MenuIcon, X } from "lucide-react";
+import { Menu as MenuIcon, UserRound, X } from "lucide-react";
 import Cart from "../cart/Cart";
 import { useCart } from "../../hooks/useCart";
 import logo from "../../assets/logo.png";
@@ -92,6 +92,17 @@ const Menu = () => {
             </Link>
           </li>
         </ul>
+        <div className="flex justify-end w-full items-end pr-30">
+          <Link
+            to={"/login"}
+            className="bg-white px-10 py-3 shadow-uniform rounded-4xl"
+          >
+            <div className="flex gap-3">
+              <UserRound />
+              <span>Login</span>
+            </div>
+          </Link>
+        </div>
 
         {/* Mobile menu toggle button */}
         <button

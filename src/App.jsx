@@ -7,6 +7,7 @@ import Page404 from "./pages/Page404";
 import ProductDetails from "./pages/ProductDetails";
 import { ToastContainer } from "react-toastify";
 import CheckoutCart from "./pages/CheckoutCart";
+import Login from "./pages/Login";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/checkoutcart" element={<CheckoutCart />}></Route>
         <Route path="/categories" element={<Categories />}></Route>
         <Route path="/contact" element={<Contact />}></Route>
+        <Route path="/login" element={<Login />}></Route>
         <Route path="/*" element={<Page404 />}></Route>
       </Routes>
     </>
