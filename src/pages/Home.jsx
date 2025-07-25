@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Hero from "../components/ui/Hero";
 import ProductsGrid from "../components/products/ProductsGrid";
 import { Link } from "react-router-dom";
@@ -7,6 +7,9 @@ import { MoveRight } from "lucide-react";
 
 // Home page with hero section and featured products
 const Home = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <>
       <Hero />
