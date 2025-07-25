@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Menu from "../components/Layout/Menu";
 import ProductsGrid from "../components/products/ProductsGrid";
 import Footer from "../components/Layout/Footer";

@@ -5,6 +5,7 @@ import { getProductsWithSearch } from "../../services/DummyAPI";
 import Pagination from "../ui/Pagination";
 import { getProductsByCategory } from "../../services/DummyAPI";
 import { capitalizeAndDeleteDash } from "../../utils/stringUtils";
+import loading from "../../assets/loading.gif";
 
 // Products display section with pagination and filtering
 const ProductsGrid = ({
@@ -18,7 +19,7 @@ const ProductsGrid = ({
   const [products, setProducts] = useState([]);
   const [productsInActualPage, setProductsInActualPage] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   // If there's a pagination set, show current page products
   const currentPageProducts = useMemo(() => {
@@ -86,7 +87,11 @@ const ProductsGrid = ({
 
   return (
     <>
-      {products.length > 0 ? (
+      {isLoading ? (
+        <div className="flex justify-center items-center w-32 mx-auto mt-20">
+          <img src={loading} alt="" />
+        </div>
+      ) : products.length > 0 ? (
         <>
           {/* Product grid display */}
           <div

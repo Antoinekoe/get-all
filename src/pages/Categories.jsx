@@ -4,11 +4,12 @@ import Footer from "../components/Layout/Footer";
 import { getCategoryImages } from "../services/DummyAPI";
 import CategoryGrid from "../components/Categories/CategoryGrid";
 import { useCategories } from "../hooks/useCategories";
+import loading from "../assets/loading.gif";
 
 const Categories = () => {
   // State management for categories and images
   const [categoryImage, setCategoryImage] = useState({});
-  const { allCategories } = useCategories();
+  const { allCategories, isLoading: isLoadingCategories } = useCategories();
   const [isLoadingImages, setIsLoadingImages] = useState(false);
 
   useEffect(() => {
@@ -83,7 +84,15 @@ const Categories = () => {
         <h1 className="font-medium text-3xl md:text-4xl lg:text-6xl text-center my-15">
           Choose your category
         </h1>
-        {renderAllGrids()}
+        {isLoadingCategories ? (
+          <img
+            src={loading}
+            alt=""
+            className="flex justify-center items-center w-32 mx-auto mt-20"
+          />
+        ) : (
+          renderAllGrids()
+        )}
       </div>
       <Footer />
     </>
