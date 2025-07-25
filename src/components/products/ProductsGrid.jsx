@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import Product from "./Product";
 import { getProducts } from "../../services/DummyAPI";
 import { getProductsWithSearch } from "../../services/DummyAPI";
@@ -18,63 +18,62 @@ const ProductsGrid = ({
   const [products, setProducts] = useState([]);
   const [productsInActualPage, setProductsInActualPage] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  // Calculate pagination info
-  const totalPages =
-    paginationLimit > 0 ? Math.ceil(products.length / paginationLimit) : 1;
-  const isFirstPage = currentPage === 1;
-  const isLastPage = currentPage >= totalPages;
 
-  // Handle pagination - slice products for current page
-  useEffect(() => {
+  // Set the total pages, isFirstPage and isLastPage.
+  const paginationInfo = useMemo(() => {
+    const totalPages =
+      paginationLimit > 0 ? Math.ceil(products.length / paginationLimit) : 1;
+    return {
+      totalPages,
+      isFirstPage: currentPage === 1,
+      isLastPage: currentPage >= totalPages,
+    };
+  }, [products.length, paginationLimit, currentPage]);
+
+  // Next/previous function, only rendered once
+  const changePage = useCallback((operator) => {
+    setCurrentPage((prevPage) => {
+      const newPage = operator === "+" ? prevPage + 1 : prevPage - 1;
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return newPage;
+    });
+  }, []);
+
+  // If there's a pagination set, show current page products
+  const currentPageProducts = useMemo(() => {
     if (paginationLimit > 0) {
       const startIndex = (currentPage - 1) * paginationLimit;
       const endIndex = startIndex + paginationLimit;
-
-      setProductsInActualPage(products.slice(startIndex, endIndex));
-    } else {
-      setProductsInActualPage(products);
+      return products.slice(startIndex, endIndex);
     }
-  }, [currentPage, products, paginationLimit]);
+    return products;
+  }, [products, currentPage, paginationLimit]);
 
-  // Navigation between pages with smooth scroll to top
-  const changePage = (operator) => {
-    switch (operator) {
-      case "+":
-        setCurrentPage(currentPage + 1);
-        window.scrollTo({ top: 0, behavior: "smooth" });
-        break;
-      case "-":
-        setCurrentPage(currentPage - 1);
-        window.scrollTo({ top: 0, behavior: "smooth" });
-        break;
-    }
-  };
-
-  // Fetch products based on search/category filters
   useEffect(() => {
-    if (!searchTerm && !categoryTerm) {
-      // Load all products
-      getProducts(numberOfProducts, paginationLimit).then((data) => {
+    setProductsInActualPage(currentPageProducts);
+  }, [currentPageProducts]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      if (!searchTerm && !categoryTerm) {
+        const data = await getProducts(numberOfProducts, paginationLimit);
         setProducts(data);
         setCurrentPage(1);
-      });
-    }
-    if (searchTerm && !categoryTerm) {
-      // Search products by term
-      getProductsWithSearch(numberOfProducts, paginationLimit, searchTerm).then(
-        (data) => {
-          setProducts(data);
-          setCurrentPage(1);
-        }
-      );
-    }
-    if (!searchTerm && categoryTerm) {
-      // Filter products by category
-      getProductsByCategory(categoryTerm).then((data) => {
+      } else if (searchTerm && !categoryTerm) {
+        const data = await getProductsWithSearch(
+          numberOfProducts,
+          paginationLimit,
+          searchTerm
+        );
+        setProducts(data);
+        setCurrentPage(1);
+      } else if (!searchTerm && categoryTerm) {
+        const data = await getProductsByCategory(categoryTerm);
         setProducts(data.products);
         setCurrentPage(1);
-      });
-    }
+      }
+    };
+    fetchProducts();
   }, [numberOfProducts, paginationLimit, searchTerm, categoryTerm]);
 
   return (
@@ -102,9 +101,9 @@ const ProductsGrid = ({
           <div>
             <Pagination
               changePage={changePage}
-              isFirstPage={isFirstPage}
-              isLastPage={isLastPage}
-              totalPages={totalPages}
+              isFirstPage={paginationInfo.isFirstPage}
+              isLastPage={paginationInfo.isLastPage}
+              totalPages={paginationInfo.totalPages}
             />
           </div>
         </>

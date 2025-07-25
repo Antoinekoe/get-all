@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu as MenuIcon, X } from "lucide-react";
 import Cart from "../cart/Cart";
 import { useCart } from "../../hooks/useCart";
+import logo from "../../assets/logo.png";
 
 // Main navigation component with responsive menu
 const Menu = () => {
@@ -27,11 +28,7 @@ const Menu = () => {
     <header className="px-4 py-6 w-full max-w-full overflow-hidden">
       <nav className="flex justify-between items-center w-full">
         <Link to="/" className="flex-shrink-0">
-          <img
-            src="../../src/assets/logo.png"
-            alt="Logo"
-            className="max-w-full h-auto"
-          />
+          <img src={logo} alt="Logo" className="max-w-full h-auto" />
         </Link>
 
         {/* Desktop navigation menu */}

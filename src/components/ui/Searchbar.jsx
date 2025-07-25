@@ -1,5 +1,5 @@
 import { Search } from "lucide-react";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { getProductsSuggestions } from "../../services/DummyAPI";
 import SearchSuggestions from "../products/SearchSuggestions";
@@ -9,7 +9,34 @@ const Searchbar = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [productsSuggested, setProductsSuggested] = useState([]);
   const searchbarRef = useRef(null);
+  const timeoutRef = useRef(null);
   const navigate = useNavigate();
+
+  const debouncedSearch = useCallback((value) => {
+    //Clear the timeout if another letter is written
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+
+    timeoutRef.current = setTimeout(() => {
+      if (value.length >= 4) {
+        getProductsSuggestions(value).then((data) => {
+          setProductsSuggested(data.products);
+        });
+      } else {
+        setProductsSuggested([]);
+      }
+    }, 500);
+  }, []);
+
+  // Final cleanup
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
 
   // Close suggestions when clicking outside
   useEffect(() => {
@@ -30,19 +57,15 @@ const Searchbar = () => {
     };
   }, [productsSuggested.length]);
 
-  // Get product suggestions after 4+ characters
-  const handleChange = (e) => {
-    setSearchTerm(e.target.value);
-    setTimeout(() => {
-      e.target.value.length >= 4
-        ? getProductsSuggestions(searchTerm).then((data) => {
-            setProductsSuggested(data.products);
-          })
-        : setProductsSuggested([]);
-    }, 500);
-
-    return;
-  };
+  // Get product suggestions after 4+ characters, and call API just once
+  const handleChange = useCallback(
+    (e) => {
+      const value = e.target.value;
+      setSearchTerm(value);
+      debouncedSearch(value);
+    },
+    [debouncedSearch]
+  );
 
   const resetProductsSuggested = () => {
     setProductsSuggested([]);

@@ -1,35 +1,33 @@
 import React, { useEffect, useState } from "react";
 import Menu from "../components/Layout/Menu";
 import Footer from "../components/Layout/Footer";
-import { getAllCategories, getCategoryImages } from "../services/DummyAPI";
+import { getCategoryImages } from "../services/DummyAPI";
 import CategoryGrid from "../components/Categories/CategoryGrid";
 import { useCategories } from "../hooks/useCategories";
 
 const Categories = () => {
   // State management for categories and images
   const [categoryImage, setCategoryImage] = useState({});
-  const { allCategories, isLoading, setAllCategories, setIsLoading } =
-    useCategories();
+  const { allCategories } = useCategories();
+  const [isLoadingImages, setIsLoadingImages] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  // Load all categories on component mount
-  useEffect(() => {
-    getAllCategories().then((data) => {
-      setAllCategories(data);
-    });
-  }, []);
-
   // Fetch category images when categories are loaded
   useEffect(() => {
     if (allCategories.length > 0) {
-      setIsLoading(true);
-      getCategoryImages(allCategories).then((data) => {
-        setCategoryImage(data);
-        setIsLoading(false);
-      });
+      setIsLoadingImages(true);
+      getCategoryImages(allCategories)
+        .then((data) => {
+          setCategoryImage(data);
+          setIsLoadingImages(false);
+        })
+        .catch((error) => {
+          console.error("Error fetching category images :", error);
+          setIsLoadingImages(false);
+        });
     }
   }, [allCategories]);
 
@@ -50,7 +48,7 @@ const Categories = () => {
             key={`first-${categoryIndex}`}
             categories={newCategories}
             categoryImage={categoryImage}
-            isLoading={isLoading}
+            isLoading={isLoadingImages}
             isFirstLayout={true}
           />
         );
@@ -68,7 +66,7 @@ const Categories = () => {
             key={`second-${categoryIndex}`}
             categories={newCategories}
             categoryImage={categoryImage}
-            isLoading={isLoading}
+            isLoading={isLoadingImages}
             isFirstLayout={false}
           />
         );

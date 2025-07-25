@@ -10,7 +10,7 @@ import { useHandleClickPlus } from "../hooks/useHandleClickPlus";
 import { Trash } from "lucide-react";
 
 const CheckoutCart = () => {
-  const { products, isOpen, setIsOpen, setProducts } = useCart();
+  const { setIsOpen } = useCart();
   const groupedProducts = useGroupedProducts();
   const deleteSingleProduct = useDeleteSingleProduct();
   const deleteAllProducts = useDeleteAllProducts();

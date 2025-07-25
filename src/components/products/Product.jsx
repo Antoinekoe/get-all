@@ -1,9 +1,9 @@
-import React from "react";
+import React, { memo } from "react";
 import { useNavigate } from "react-router-dom";
 import AddToCartButton from "../ui/AddToCartButton";
 
 // Individual product card component
-const Product = ({ id, images, category, description, price, title }) => {
+const Product = memo(({ id, images, category, description, price, title }) => {
   const navigate = useNavigate();
 
   // Navigate to product details page
@@ -47,6 +47,6 @@ const Product = ({ id, images, category, description, price, title }) => {
       </div>
     </div>
   );
-};
+});
 
 export default Product;
