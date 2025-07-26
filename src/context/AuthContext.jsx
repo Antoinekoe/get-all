@@ -6,7 +6,7 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userInfos, setUserInfos] = useState([]);
+  const [userInfos, setUserInfos] = useState(null);
 
   // At the mount, check if the user is logged in
 
@@ -18,12 +18,15 @@ export const AuthProvider = ({ children }) => {
       setIsLoggedIn(true);
     }
     if (savedUserInfos) {
-      setUserInfos(savedUserInfos);
+      try {
+        setUserInfos(JSON.parse(savedUserInfos)); // Parse the JSON string
+      } catch (error) {
+        console.error("Error parsing user info:", error);
+        localStorage.removeItem("userInfos");
+      }
+    } else {
+      logIn("emilys", "emilyspass");
     }
-  }, []);
-
-  useEffect(() => {
-    logIn("emilysaa", "emilyspass");
   }, []);
 
   // Update localStorage when loggin changes
@@ -68,5 +71,3 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
-
-export default AuthContext;
