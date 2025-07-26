@@ -18,7 +18,7 @@ const Home = () => {
       </h2>
       <ProductsGrid
         numberOfProducts={6}
-        gridCols="grid-cols-1 md:grid-cols-3"
+        gridCols="grid-cols-1 md:grid-cols-2 lg:grid-cols-3" // Updated grid columns
       />
       {/* Link to all products */}
       <h3 className="flex justify-end items-end font-medium text-3xl text-end md:mt-10 w-5/6">

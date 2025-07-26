@@ -40,7 +40,7 @@ const Product = memo(({ id, images, category, description, price, title }) => {
         <span className="text-center break-words w-full">{description}</span>
       </div>
       {/* Product actions */}
-      <div className="flex flex-col md:flex-row gap-3 md:gap-5 justify-center items-center w-full mt-auto">
+      <div className="flex flex-col xl:flex-row gap-3 md:gap-5 justify-center items-center w-full mt-auto">
         <AddToCartButton
           id={id}
           images={images}

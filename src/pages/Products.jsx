@@ -58,7 +58,7 @@ const Products = () => {
             Our products
           </h1>
           {/* Search and filter controls */}
-          <div className="flex flex-col md:flex-row gap-6 md:gap-10 items-center justify-center">
+          <div className="flex flex-col lg:flex-row gap-6 md:gap-10 items-center justify-center">
             <Searchbar />
             <div className="flex relative shadow-uniform justify-center items-center bg-white rounded-2xl px-4 w-60 md:w-96">
               <Select
@@ -119,7 +119,7 @@ const Products = () => {
         paginationLimit={9}
         searchTerm={search}
         categoryTerm={category}
-        gridCols="grid-cols-1 md:grid-cols-3"
+        gridCols="grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
       />
       <Footer />
     </>

@@ -111,7 +111,7 @@ const Menu = () => {
             className="flex justify-end w-full items-end pr-35 lg:pr-20 hover:cursor-pointer"
             onClick={() => logOut()}
           >
-            <div className="flex flex-col bg-white px-4 py-2 lg:px-4 lg:py-3 shadow-uniform rounded-full justify-center items-center gap-1">
+            <div className="flex flex-col bg-white px-3 py-2 lg:px-4 lg:py-3 shadow-uniform rounded-full justify-center items-center gap-1">
               <LogOut className="hover:cursor-pointer" />
               <span>Logout</span>
             </div>
