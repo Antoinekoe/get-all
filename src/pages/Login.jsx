@@ -12,13 +12,11 @@ const Login = () => {
     password: "",
   });
   const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-    setIsLoading(true);
     try {
       const response = await logIn(formData.username, formData.password);
 
@@ -31,8 +29,6 @@ const Login = () => {
     } catch (error) {
       setError("Network error, please try again.");
       console.log(error);
-    } finally {
-      setIsLoading(false);
     }
   };
 

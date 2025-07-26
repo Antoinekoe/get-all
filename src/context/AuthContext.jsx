@@ -37,7 +37,6 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     if (userInfos) {
       localStorage.setItem("userInfos", JSON.stringify(userInfos));
-      console.log("User info updated:", userInfos);
     }
   }, [userInfos]);
 

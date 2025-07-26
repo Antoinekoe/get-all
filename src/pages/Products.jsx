@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Menu from "../components/Layout/Menu";
 import ProductsGrid from "../components/products/ProductsGrid";
 import Footer from "../components/Layout/Footer";
@@ -13,7 +13,6 @@ const Products = () => {
   const { search, category } = useParams();
   const { allCategories } = useCategories();
   const { selectedCategory, setSelectedCategory } = useCategories();
-  const [imageLoading, setImageLoading] = useState(true);
 
   const navigate = useNavigate();
 
@@ -23,7 +22,6 @@ const Products = () => {
 
   // Handle category selection in product page
   const handleChange = (selectedOption) => {
-    console.log(selectedOption);
     const newCategory = selectedOption ? selectedOption.value : "";
     setSelectedCategory(newCategory);
 

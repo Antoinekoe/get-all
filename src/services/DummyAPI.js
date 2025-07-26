@@ -119,7 +119,7 @@ export const tryLogin = async (username, password) => {
   } catch (error) {
     return {
       success: false,
-      error: "Network error",
+      error: error,
     };
   }
 };

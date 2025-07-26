@@ -10,7 +10,7 @@ import { useAuth } from "../../hooks/useAuth";
 const Menu = () => {
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { isLoggedIn, logOut, userInfos } = useAuth();
+  const { isLoggedIn, logOut } = useAuth();
   const { isOpen: isCartOpen, setIsOpen: setIsCartOpen } = useCart();
 
   // Check if current route is active
