@@ -24,8 +24,6 @@ export const AuthProvider = ({ children }) => {
         console.error("Error parsing user info:", error);
         localStorage.removeItem("userInfos");
       }
-    } else {
-      logIn("emilys", "emilyspass");
     }
   }, []);
 
@@ -49,11 +47,14 @@ export const AuthProvider = ({ children }) => {
       if (response.success === true) {
         setIsLoggedIn(true);
         setUserInfos(response.data);
+        return response;
       } else {
         console.log(response.error);
+        return response;
       }
     } catch (error) {
       console.error("Network/API error :", error);
+      return { success: false, error: "Newtork error" };
     }
   };
 
@@ -65,9 +66,17 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ isLoggedIn, setIsLoggedIn, logIn, logOut, userInfos }}
+      value={{
+        isLoggedIn,
+        setIsLoggedIn,
+        logIn,
+        logOut,
+        userInfos,
+      }}
     >
       {children}
     </AuthContext.Provider>
   );
 };
+
+export default AuthContext;

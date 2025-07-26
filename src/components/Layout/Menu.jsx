@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu as MenuIcon, UserRound, X } from "lucide-react";
+import { LogOut, Menu as MenuIcon, UserRound, X } from "lucide-react";
 import Cart from "../cart/Cart";
 import { useCart } from "../../hooks/useCart";
 import logo from "../../assets/logo.png";
+import { useAuth } from "../../hooks/useAuth";
 
 // Main navigation component with responsive menu
 const Menu = () => {
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isLoggedIn, logOut, userInfos } = useAuth();
   const { isOpen: isCartOpen, setIsOpen: setIsCartOpen } = useCart();
 
   // Check if current route is active
@@ -92,17 +94,29 @@ const Menu = () => {
             </Link>
           </li>
         </ul>
-        <div className="flex justify-end w-full items-end pr-35 lg:pr-20">
-          <Link
-            to={"/login"}
-            className="bg-white px-4 py-2 lg:px-5 lg:py-3 shadow-uniform rounded-full"
+        {isLoggedIn === false ? (
+          <div className="flex justify-end w-full items-end pr-35 lg:pr-20">
+            <Link
+              to={"/login"}
+              className="bg-white px-4 py-2 lg:px-5 lg:py-3 shadow-uniform rounded-full"
+            >
+              <div className="flex flex-col justify-center items-center gap-1">
+                <UserRound />
+                <span>Login</span>
+              </div>
+            </Link>
+          </div>
+        ) : (
+          <div
+            className="flex justify-end w-full items-end pr-35 lg:pr-20 hover:cursor-pointer"
+            onClick={() => logOut()}
           >
-            <div className="flex flex-col justify-center items-center gap-1">
-              <UserRound />
-              <span>Login</span>
+            <div className="flex flex-col bg-white px-4 py-2 lg:px-4 lg:py-3 shadow-uniform rounded-full justify-center items-center gap-1">
+              <LogOut className="hover:cursor-pointer" />
+              <span>Logout</span>
             </div>
-          </Link>
-        </div>
+          </div>
+        )}
 
         {/* Mobile menu toggle button */}
         <button
