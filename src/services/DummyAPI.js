@@ -96,3 +96,30 @@ export const getCategoryImages = async (allCategories) => {
   }
   return images;
 };
+
+export const tryLogin = async (username, password) => {
+  try {
+    const response = await fetch("https://dummyjson.com/user/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username: username,
+        password: password,
+        expiresInMins: 30, // optional, defaults to 60
+      }),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      return { success: true, data };
+    } else {
+      const errorData = await response.json();
+      return { success: false, error: errorData.message || "Login failed" };
+    }
+  } catch (error) {
+    return {
+      success: false,
+      error: "Network error",
+    };
+  }
+};
